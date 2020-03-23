@@ -26,12 +26,29 @@ class Welcome extends CI_Controller {
 
 		$this->load->database();
 		$this->load->helper('url');
+		$this->load->model('m_util');
 
 
 	}
 
 	public function index()
 	{
-		$this->load->view('public/index.php');
+	
+		$data['provinsi'] = $this->m_util->provinsi()->result();
+		$data['media'] = 	$this->m_util->all_media()->result();
+		$this->load->view('public/index.php',$data);
+
 	}
+
+	public function ambil_kab($province_id)
+	{
+		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Headers: *");
+		header('Content-Type: application/json');	
+		$q = $this->m_util->kabupaten($province_id);
+		echo json_encode($q->result());
+
+	}
+
+
 }
