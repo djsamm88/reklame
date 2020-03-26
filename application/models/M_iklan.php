@@ -8,7 +8,19 @@ class M_iklan extends CI_Model {
 	
 		$this->load->helper('custom_func');
 	}
-	
+
+
+	public function rekomendasi($limit)
+	{
+		$q = $this->db->query("SELECT a.*,b.name AS nama_provinsi,c.name AS nama_kota FROM tbl_iklan a 
+									LEFT JOIN provinces b ON a.provinsi=b.id 
+									LEFT JOIN regencies c ON a.kota_kab=c.id 
+								WHERE rekomendasi='1'
+								ORDER BY id_iklan DESC								
+								LIMIT $limit
+			");
+		return $q;	
+	}	
 
 	public function all()
 	{

@@ -43,6 +43,15 @@ class Iklan extends CI_Controller {
 		$this->db->delete('tbl_iklan');
 	}
 
+	public function recomendasi()
+	{
+		$id = $this->input->post('id');
+		$val= $this->input->post('val');
+		$rekomendasi = $val=='1'?'0':'1';
+
+		$this->db->query("UPDATE tbl_iklan SET rekomendasi='$rekomendasi' WHERE id_iklan='$id'");
+	}
+
 	public function simpan()
 	{
 		$id = $this->input->post('id_iklan');		

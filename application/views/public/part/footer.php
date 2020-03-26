@@ -243,3 +243,24 @@
 	<!-- Footer Scripts
 	============================================= -->
 	<script src="<?php echo base_url()?>assets/js/functions.js"></script>
+
+
+
+<!-- google maps api -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvnP6-IQADuP461VqlXqYjdm6sWlkhVWs&sensor=false&libraries=places"></script>
+
+
+	<script type="text/javascript">
+		$("#pilih_prov").on("change",function(){
+			//console.log($(this).val());
+
+			$.get("<?php echo base_url()?>index.php/welcome/ambil_kab/"+$(this).val(),function(e){
+				//console.log(e);
+				$("#kota_kab").empty();
+				$.each(e,function(a,b){
+					console.log(b.name);
+					$("#kota_kab").append("<option value='"+b.id+"'>"+b.name+"</option>");
+				})
+			})
+		})
+	</script>

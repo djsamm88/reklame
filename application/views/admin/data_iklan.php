@@ -39,9 +39,9 @@
                                             <th>penerangan</th>
                                             <th>venue</th>
                                             <th>nama_media_promosi</th>
-                                            <th>tags</th>                                            
+                                            <th>Ukuran</th>                                            
                                             <th>tgl</th>
-
+                                            <th>Rekomendasi</th>
                                             <th>Action</th>                                                
                                         </tr>
                                     </thead>
@@ -51,6 +51,14 @@
                     $no=0;
                     foreach ($all_admin->result() as $key) {
                         $no++;
+                        if($key->rekomendasi=='1')
+                        {
+                            $btn_rekomendasi = "<button class='btn btn-xs btn-warning' onclick='recomendasi($key->id_iklan,$key->rekomendasi)'>Non Aktifkan</button>";
+                            $key->rekomendasi ="Yes";
+                        }else{
+                            $btn_rekomendasi = "<button class='btn btn-xs btn-success' onclick='recomendasi($key->id_iklan,$key->rekomendasi)'>Aktifkan</button>";
+                            $key->rekomendasi="No";
+                        }
                         echo "
                             <tr>
                                 <td>$no</td>
@@ -60,8 +68,9 @@
                                 <td>$key->penerangan</td>
                                 <td>$key->venue</td>
                                 <td>$key->nama_media_promosi</td>
-                                <td>$key->tags</td>                                
+                                <td>$key->tinggi x $key->lebar M</td>                                
                                 <td>$key->tgl</td>
+                                <td>$key->rekomendasi $btn_rekomendasi</td>
                                 <td>
                                     <button class='btn btn-xs btn-info  btn-block' onclick='edit($key->id_iklan,2)'>View</button>
 
@@ -149,21 +158,44 @@
                     </div>
                 </div>
                     
-                <div class="form-group">
-                    <label class="control-label">nama_media_promosi</label>
-                    <input class="form-control" name="nama_media_promosi" id="nama_media_promosi" type="text">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">nama_media_promosi</label>
+                            <input class="form-control" name="nama_media_promosi" id="nama_media_promosi" type="text">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="row">
+                            <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">tinggi (M)</label>
+                                <input class="form-control nomor" name="tinggi" id="tinggi" type="text" placeholder="meter">
+                            </div>
+                            </div>
+                            <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">lebar (M)</label>
+                                <input class="form-control nomor" name="lebar" id="lebar" type="text" placeholder="meter">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">tags</label>
+                            <select class="form-control select2" name="tags" id="tags" style="width: 100%">
+                                <?php 
+                                    foreach ($this->m_util->all_master('tags')->result() as $master) {
+                                        echo "<option value='$master->nama'>$master->nama</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                     
-                <div class="form-group">
-                    <label class="control-label">tags</label>
-                    <select class="form-control select2" name="tags" id="tags" style="width: 100%">
-                        <?php 
-                            foreach ($this->m_util->all_master('tags')->result() as $master) {
-                                echo "<option value='$master->nama'>$master->nama</option>";
-                            }
-                        ?>
-                    </select>
-                </div>
+                
                     
 
                 <table class="table color-bordered-table info-bordered-table">
@@ -480,6 +512,16 @@ $(".select2").select2({
 
 
 
+function recomendasi(id,val)
+{
+    if(confirm("Anda Yakin?"))
+    {
+        $.post("<?php echo base_url()?>index.php/admin/iklan/recomendasi/",{id:id,val:val},function(){
+            eksekusi_controller('<?php echo base_url()?>index.php/admin/iklan/');
+        })
+    }
+}
+
 /*********** maps ********/
 function mapsTambahBaru()
 {
@@ -558,6 +600,7 @@ function edit(id,jenis)
     {
         $("#tombol_simpan").hide();
         $("#form_modal :input").prop("disabled", true);
+        $(".dropify-wrapper").remove();
 
     }else{
         $("#tombol_simpan").show();
@@ -573,6 +616,8 @@ function edit(id,jenis)
 
         $("#orientasi").val(x.orientasi);
         $("#penerangan").val(x.penerangan);
+        $("#tinggi").val(x.tinggi);
+        $("#lebar").val(x.lebar);
 
         $("#venue").val(x.venue).trigger('change');
         $("#tags").val(x.tags).trigger('change');
@@ -868,7 +913,7 @@ $("#provinsi").on("change",function(){
 
 
 $("#responsive-modal").on("hidden.bs.modal", function () {
-eksekusi_controller('<?php echo base_url()?>index.php/admin/iklan/');
+    eksekusi_controller('<?php echo base_url()?>index.php/admin/iklan/');
 });
 
 

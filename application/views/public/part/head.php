@@ -23,6 +23,10 @@
 	============================================= -->
 	<title>OkIklan - Selamat datang</title>
 	  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url()?>assets/logo_petak.jpeg">
-
+	 <style type="text/css">
+	 	.gambar_produk{	 		
+	 		 width: 100% ;height: 200px !important; ;object-fit: cover !important; 
+	 	}
+	 </style>
 
 </head>

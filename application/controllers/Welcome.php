@@ -27,6 +27,7 @@ class Welcome extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->model('m_util');
+		$this->load->model('m_iklan');
 
 
 	}
@@ -36,8 +37,22 @@ class Welcome extends CI_Controller {
 	
 		$data['provinsi'] = $this->m_util->provinsi()->result();
 		$data['media'] = 	$this->m_util->all_media()->result();
+		$data['rekomendasi'] = $this->m_iklan->rekomendasi(6);
 		$this->load->view('public/index.php',$data);
 
+	}
+
+
+	public function detail($id_iklan=null)
+	{
+		if($id_iklan==null)
+		{
+			die("Not Found");
+		}
+		$data['provinsi'] = $this->m_util->provinsi()->result();
+		$data['media'] = 	$this->m_util->all_media()->result();
+		$data['data'] = $this->m_iklan->by_id($id_iklan);
+		$this->load->view('public/detail.php',$data);
 	}
 
 	public function ambil_kab($province_id)
