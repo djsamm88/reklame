@@ -48,7 +48,7 @@ class Master extends CI_Controller {
 		$id = $this->input->post('id_master');		
 
 		$serialize = $this->input->post();
-
+		$serialize['jenis'] = strtolower($serialize['jenis']);
 
 		if($id=='')
 		{

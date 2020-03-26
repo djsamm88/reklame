@@ -37,7 +37,16 @@ class M_util extends CI_Model {
 
 	public function all_bank()
 	{
-		$this->db->where('jenis', 'media');
+		$this->db->where('jenis', 'bank');
+		$q = $this->db->get('tbl_master');
+		
+		return $q;
+
+	}
+
+	public function all_master($jenis)
+	{
+		$this->db->where('jenis', $jenis);
 		$q = $this->db->get('tbl_master');
 		
 		return $q;

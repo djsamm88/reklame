@@ -30,6 +30,9 @@
                                 <li><a href="#" onclick="eksekusi_controller('<?php echo base_url()?>index.php/admin/pengguna');">Pengguna</a></li>
                                 
 
+                                <li><a href="#" onclick="eksekusi_controller('<?php echo base_url()?>index.php/admin/iklan');">Iklan</a></li>
+                                
+
                             </ul>
                         </li>
 

@@ -55,7 +55,25 @@
     <script src="<?php echo base_url()?>assets_admin/node_modules/timepicker/bootstrap-timepicker.min.js"></script>
     <script src="<?php echo base_url()?>assets_admin/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
 
+    <script src="<?php echo base_url()?>assets_admin/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="<?php echo base_url()?>assets_admin/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+
+    <script src="<?php echo base_url()?>assets_admin/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets_admin/node_modules/multiselect/js/jquery.multi-select.js"></script>
+    <script src="<?php echo base_url()?>assets_admin/node_modules/tinymce/tinymce.min.js"></script>
+
+
+    <script src="<?php echo base_url()?>assets_admin/pace/pace.min.js"></script>
+
+
+
+<!-- google maps api -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvnP6-IQADuP461VqlXqYjdm6sWlkhVWs&sensor=false&libraries=places"></script>
+
 <script type="text/javascript">
+
+$(document).ajaxStart(function() { Pace.restart(); });
+
         
 function eksekusi_controller(method)
 {

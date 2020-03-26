@@ -105,7 +105,7 @@
 
 <!-- sample modal content -->
 <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Form Data</h4>
@@ -129,7 +129,13 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">nama_bank</label>
-                        <input type="text" class="form-control" name="nama_bank" id="nama_bank">
+                        <select type="text" class="form-control" name="nama_bank" id="nama_bank">
+                            <?php 
+                                foreach ($this->m_util->all_bank()->result() as $bank) {
+                                    echo "<option value='$bank->nama'>$bank->nama</option>";
+                                }
+                            ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">no_rekening</label>

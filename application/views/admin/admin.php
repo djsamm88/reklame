@@ -13,12 +13,42 @@
     <title>Admin OkIklan</title>
     <!-- Custom CSS -->
     <link href="<?php echo base_url()?>assets_admin/dist/css/style.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo base_url()?>assets_admin/node_modules/dropify/dist/css/dropify.min.css">
+    <link href="<?php echo base_url()?>assets_admin/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url()?>assets_admin/node_modules/select2/dist/css/select2_bootstrap.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?php echo base_url()?>assets_admin/dist/css/pages/google-vector-map.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>assets_admin/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="<?php echo base_url()?>assets_admin/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+
+    <link href="<?php echo base_url()?>assets_admin/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+
+    
+    <link href="<?php echo base_url()?>assets_admin/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+
+
+    <link rel="stylesheet" href="<?php echo base_url()?>assets_admin/node_modules/html5-editor/bootstrap-wysihtml5.css" />
+
+    <link rel="stylesheet" href="<?php echo base_url()?>assets_admin/pace/pace.min.css">
+
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+    <style type="text/css">
+        @media (min-width: 768px) {
+          .modal-xl {
+            width: 90%;
+           max-width:1200px;
+          }
+        }
+    </style>
 </head>
 
 <body class="skin-default fixed-layout">
