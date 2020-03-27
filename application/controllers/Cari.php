@@ -27,14 +27,22 @@ class Cari extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->model('m_util');
+		$this->load->model('m_iklan');
 
 
 	}
 
 	public function index()
 	{
-	
-		$data['query'] = $this->input->get();		
+		$data['provinsi'] = $this->m_util->provinsi()->result();
+		$data['media'] = 	$this->m_util->all_media()->result();
+		$query = $this->input->get();		
+		//print_r(array_filter($query));
+		$where = array_filter($query);
+
+		$data['pencarian'] = $this->m_iklan->cari($where);
+
+
 		$this->load->view('public/cari.php',$data);
 
 	}

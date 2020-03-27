@@ -251,16 +251,38 @@
 
 
 	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#pilih_prov").val("<?php echo $sel_provinsi?>").trigger("change");	
+
+			$("#t4_judul_cari").empty()
+			$("#t4_judul_cari").append($("#pilih_prov option:selected").text())
+			$("#t4_judul_cari").append($("#kota_kab option:selected").text())
+			$("#t4_judul_cari").append($("#pilih_media option:selected").text())
+		})
+
 		$("#pilih_prov").on("change",function(){
-			//console.log($(this).val());
+			
+			var sel = "<?php echo $sel_kota_kab?>"; //ini dari header
 
 			$.get("<?php echo base_url()?>index.php/welcome/ambil_kab/"+$(this).val(),function(e){
 				//console.log(e);
-				$("#kota_kab").empty();
+				$("#kota_kab").empty();				
+				$("#kota_kab").append("<option value=''>--- Pilih Kota/Kab ---</option>");
 				$.each(e,function(a,b){
-					console.log(b.name);
-					$("#kota_kab").append("<option value='"+b.id+"'>"+b.name+"</option>");
+					
+					if(b.id==sel)
+					{
+						var select = "selected";
+						console.log("testing="+b.id+"=="+sel);
+					}else{
+						var select = "";
+					}
+
+					$("#kota_kab").append("<option value='"+b.id+"' "+select+">"+b.name+"</option>");
 				})
 			})
-		})
+		});
+
+
+
 	</script>

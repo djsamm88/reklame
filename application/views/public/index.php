@@ -41,19 +41,21 @@
 				<div id="shop" class="shop grid-container clearfix" data-layout="fitRows">
 				<?php 
 				foreach ($rekomendasi->result() as $rek) {
+					$link_detail_kecil = base_url()."index.php/welcome/detail_kecil/$rek->id_iklan";
+					$link_detail = base_url()."index.php/welcome/detail/$rek->id_iklan?jenis_media_promosi=$rek->jenis_media_promosi&provinsi=$rek->provinsi&kota_kab=$rek->kota_kab";
 				echo "<div class='product clearfix'>
 							<div class='product-image'>
-								<a href='#'><img src='".base_url()."uploads/$rek->gbr_1' class='gambar_produk'></a>		
-								<a href='#'><img src='".base_url()."uploads/$rek->gbr_2' class='gambar_produk'></a>								
+								<a href='$link_detail'><img src='".base_url()."uploads/$rek->gbr_1' class='gambar_produk'></a>		
+								<a href='$link_detail'><img src='".base_url()."uploads/$rek->gbr_2' class='gambar_produk'></a>								
 								<div class='sale-flash'>$rek->tinggi x $rek->lebar M</div>
 								<div class='product-overlay'>
-									<a href='".base_url()."index.php/welcome/detail/$rek->id_iklan' class='add-to-cart'><i class='icon-note'></i><span> Detail</span></a>
-									<a href='include/ajax/shop-item.html' class='item-quick-view' data-lightbox='ajax'><i class='icon-zoom-in2'></i><span> Quick View</span></a>
+									<a href='$link_detail' class='add-to-cart'><i class='icon-note'></i><span> Detail</span></a>
+									<a href='$link_detail_kecil' class='item-quick-view' data-lightbox='ajax'><i class='icon-zoom-in2'></i><span> Quick View</span></a>
 								</div>
 							</div>
 							<div class='product-desc'>
 								<div class='product-title'>
-									<h3><a href='#'>$rek->jenis_media_promosi</a></h3>
+									<h3><a href='$link_detail'>$rek->jenis_media_promosi</a></h3>
 									<small>$rek->orientasi - $rek->penerangan</small>
 								</div>
 								<div class='product-price'> <ins>".rupiah($rek->harga_1_bulan)."/Bln</ins></div>

@@ -1,6 +1,13 @@
+<?php 
+$sel_jenis_media_promosi = isset($_GET['jenis_media_promosi'])?$_GET['jenis_media_promosi']:"";
+$sel_provinsi =isset($_GET['provinsi'])?$_GET['provinsi']:"";
+$sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
+
+?>
+
 <!-- Header
 		============================================= -->
-				<header id="header" class="transparent-header full-header" data-sticky-class="not-dark">
+			<header id="header" class="transparent-header full-header" data-sticky-class="not-dark">
 
 
 			<div id="header-wrap">
@@ -25,12 +32,15 @@
 							
 							<li>
 								
-								<select class="form-control" placeholder="Media" style="height: 60px" id="pilih_media" name="media">
+								<select class="form-control" placeholder="Media" style="height: 60px" id="pilih_media" name="jenis_media_promosi">
 									 <option value="" selected="selected">--- Pilih Media ---</option>
 									 <?php 
 									 	//var_dump($provinsi);
 									 	foreach ($media as $med) {
-									 		echo "<option value='$med->id'>$med->nama</option>";
+									 		
+									 		$sel = $med->nama==$sel_jenis_media_promosi?"selected":"";
+
+									 		echo "<option value='$med->nama' $sel>$med->nama</option>";
 									 	}
 									 ?>
                                           
@@ -46,7 +56,8 @@
 									 <?php 
 									 	//var_dump($provinsi);
 									 	foreach ($provinsi as $prov) {
-									 		echo "<option value='$prov->id'>$prov->name</option>";
+									 		$sel = $prov->id==$sel_provinsi?"selected":"";
+									 		echo "<option value='$prov->id' $sel>$prov->name</option>";
 									 	}
 									 ?>
                                           
@@ -55,7 +66,7 @@
 
 							<li>
 								
-								<select class="form-control" placeholder="Kota/Kabupaten" style="height: 60px; width: 100%;" id="kota_kab" id="kota_kab">
+								<select class="form-control" placeholder="Kota/Kabupaten" style="height: 60px; width: 100%;" id="kota_kab" name="kota_kab">
 									 <option value="" selected="selected">--- Pilih Kota/Kab ---</option>
                                               
                                           
@@ -63,7 +74,7 @@
 							</li>
 
 							<li>
-								<button type="submit"  class="button button-3d nomargin" id="cari" name="cari" value="Cari" style="height: 60px"><i class="icon-search3"></i></button>
+								<button type="submit"  class="button button-3d nomargin" id="cari" value="Cari" style="height: 60px"><i class="icon-search3"></i></button>
 
 							</li>
 

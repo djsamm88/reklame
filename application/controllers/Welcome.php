@@ -55,6 +55,18 @@ class Welcome extends CI_Controller {
 		$this->load->view('public/detail.php',$data);
 	}
 
+	public function detail_kecil($id_iklan=null)
+	{
+		if($id_iklan==null)
+		{
+			die("Not Found");
+		}
+		$data['provinsi'] = $this->m_util->provinsi()->result();
+		$data['media'] = 	$this->m_util->all_media()->result();
+		$data['data'] = $this->m_iklan->by_id($id_iklan);
+		$this->load->view('public/detail_kecil.php',$data);
+	}
+
 	public function ambil_kab($province_id)
 	{
 		header("Access-Control-Allow-Origin: *");

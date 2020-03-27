@@ -9,6 +9,20 @@ class M_iklan extends CI_Model {
 		$this->load->helper('custom_func');
 	}
 
+	public function cari($where)
+	{
+		$this->db->select('a.*,b.name AS nama_provinsi,c.name AS nama_kota')
+				->from('tbl_iklan a ')
+				->join('provinces b','a.provinsi=b.id','left')
+				->join('regencies c','a.kota_kab=c.id','left')				
+				->where($where)
+				->order_by('id_iklan', 'DESC');
+		
+		$query = $this->db->get();
+
+		return $query;
+
+	}
 
 	public function rekomendasi($limit)
 	{
