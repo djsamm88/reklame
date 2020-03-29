@@ -250,39 +250,149 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvnP6-IQADuP461VqlXqYjdm6sWlkhVWs&sensor=false&libraries=places"></script>
 
 
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#pilih_prov").val("<?php echo $sel_provinsi?>").trigger("change");	
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#pilih_prov").val("<?php echo $sel_provinsi?>").trigger("change");	
 
-			$("#t4_judul_cari").empty()
-			$("#t4_judul_cari").append($("#pilih_prov option:selected").text())
-			$("#t4_judul_cari").append($("#kota_kab option:selected").text())
-			$("#t4_judul_cari").append($("#pilih_media option:selected").text())
-		})
+		$("#t4_judul_cari").empty()
+		$("#t4_judul_cari").append($("#pilih_prov option:selected").text())
+		$("#t4_judul_cari").append($("#kota_kab option:selected").text())
+		$("#t4_judul_cari").append($("#pilih_media option:selected").text())
+	})
 
-		$("#pilih_prov").on("change",function(){
-			
-			var sel = "<?php echo $sel_kota_kab?>"; //ini dari header
+	$("#pilih_prov").on("change",function(){
+		
+		var sel = "<?php echo $sel_kota_kab?>"; //ini dari header
 
-			$.get("<?php echo base_url()?>index.php/welcome/ambil_kab/"+$(this).val(),function(e){
-				//console.log(e);
-				$("#kota_kab").empty();				
-				$("#kota_kab").append("<option value=''>--- Pilih Kota/Kab ---</option>");
-				$.each(e,function(a,b){
-					
-					if(b.id==sel)
-					{
-						var select = "selected";
-						console.log("testing="+b.id+"=="+sel);
-					}else{
-						var select = "";
-					}
+		$.get("<?php echo base_url()?>index.php/welcome/ambil_kab/"+$(this).val(),function(e){
+			//console.log(e);
+			$("#kota_kab").empty();				
+			$("#kota_kab").append("<option value=''>--- Pilih Kota/Kab ---</option>");
+			$.each(e,function(a,b){
+				
+				if(b.id==sel)
+				{
+					var select = "selected";
+					console.log("testing="+b.id+"=="+sel);
+				}else{
+					var select = "";
+				}
 
-					$("#kota_kab").append("<option value='"+b.id+"' "+select+">"+b.name+"</option>");
-				})
+				$("#kota_kab").append("<option value='"+b.id+"' "+select+">"+b.name+"</option>");
 			})
-		});
+		})
+	});
+
+
+$("#register_form").on("submit",function(){
+	$("#info_daftar").hide();
+	if($("#register_password").val() != $("#register_repassword").val())
+	{
+		$("#info_daftar").hide()
+						 .html("<div class='alert alert-warning'>Password tidak sama</div>")
+						 .delay(500)
+						 .fadeIn();
+
+		$("#register_repassword").focus();
+		return false;
+	}
+
+	if($("#register_password").val().length < 6)
+	{
+		$("#info_daftar").hide()
+						 .html("<div class='alert alert-warning'>Password minimal 6 karakter</div>")
+						 .delay(500)
+						 .fadeIn();
+
+		$("#register_password").focus();
+		return false;
+	}
+	$.post("<?php echo base_url()?>index.php/welcome/daftar",$(this).serialize(),function(e){
+		console.log(e);
+		if(e == "email_terdaftar")
+		{
+			$("#info_daftar").hide()
+							 .html("<div class='alert alert-warning'>Email sudah terdaftar.</div>")
+							 .delay(500)
+							 .fadeIn();
+
+			$("#register_email").focus();
+			return false;
+		}else 
+		if(e == "berhasi_daftar")
+		{
+			$("#info_daftar").hide()
+							 .html("<div class='alert alert-success'>Berhasil terdaftar. Mohon tunggu...</div>")
+							 .delay(500)
+							 .fadeIn();
+		}else
+		{
+			$("#info_daftar").hide()
+			 				 .html("<div class='alert alert-danger'>Mohon maaf.. Ada masalah: "+e+"</div>")
+			 				 .delay(500)
+			 				 .fadeIn();
+		}
+
+
+	})
+return false;
+});
 
 
 
-	</script>
+$("#login_member").on("submit",function(){
+	$.post("<?php echo base_url()?>index.php/welcome/login",$(this).serialize(),function(e){
+		console.log(e);
+		if(e=="gagal_login")
+		{
+			$("#info_login").hide()
+							.html("<div class='alert alert-danger'>Gagal Login. Email tidak terdaftar.</div>")
+							.delay(500)
+							.fadeIn();	
+		}else if(e=="password_salah")
+		{
+			$("#info_login").hide()
+							.html("<div class='alert alert-danger'>Gagal Login. Password salah.</div>")
+							.delay(500)
+							.fadeIn();
+		}else if(e=="berhasil_login")
+		{
+			$("#info_login").hide()
+							.html("<div class='alert alert-success'>Berhasil Login. Mohon tunggu...</div>")
+							.delay(500)
+							.fadeIn();
+		}else{
+			$("#info_login").hide()
+							.html("<div class='alert alert-danger'>Mohon maaf. Ada masalah: "+e+"</div>")
+							.delay(500)
+							.fadeIn();
+		}
+		
+
+	});
+	return false;
+})
+
+</script>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAXSxqyuYW8NjggDSNverAHvQVH7bKljXA",
+    authDomain: "pay-client.firebaseapp.com",
+    databaseURL: "https://pay-client.firebaseio.com",
+    projectId: "pay-client",
+    storageBucket: "pay-client.appspot.com",
+    messagingSenderId: "300283170277",
+    appId: "1:300283170277:web:e9ff8dec50159c14d5b30c"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>

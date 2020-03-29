@@ -86,6 +86,7 @@ class Login extends CI_Controller {
 		return $query;
 	}
 
+
 	private function gas($x)
 	{
 		$a = stripslashes(strip_tags(htmlspecialchars($x,ENT_QUOTES)));

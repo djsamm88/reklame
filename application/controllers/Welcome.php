@@ -28,6 +28,8 @@ class Welcome extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('m_util');
 		$this->load->model('m_iklan');
+		$this->load->model('m_pengguna');
+		date_default_timezone_get('Asia/Jakarta');
 
 
 	}
@@ -74,6 +76,75 @@ class Welcome extends CI_Controller {
 		header('Content-Type: application/json');	
 		$q = $this->m_util->kabupaten($province_id);
 		echo json_encode($q->result());
+
+	}
+
+
+
+	private function gas($x)
+	{
+		$a = stripslashes(strip_tags(htmlspecialchars($x,ENT_QUOTES)));
+		$a = str_replace("'", "", $a);
+		return $a;
+	}
+
+
+	private function cek_email($email) {
+		$email = $this->gas($email);
+		$query = $this->db->query("SELECT * FROM tbl_pengguna WHERE email='$email'");			
+		return $query->num_rows();
+	}
+
+	private function login_terakhir($email) {
+		$email = $this->gas($email);
+		$login_terakhir = date('Y-m-d H:i:s');
+		$this->db->query("UPDATE tbl_pengguna SET login_terakhir='$login_terakhir' WHERE email='$email'");			
+		
+	}
+
+
+	public function login()
+	{
+		$serialize = $this->input->post();		
+		if($this->cek_email($serialize['email'])>0)
+		{
+			$this->db->where($serialize);
+			$query = $this->db->get('tbl_pengguna');
+			if($query->num_rows()>0)
+			{
+				echo "berhasil_login";
+				$this->login_terakhir($serialize['email']);
+				die();
+			}else{
+				echo "password_salah";
+				die();
+			}
+
+		}else{
+			echo "gagal_login";
+			die();
+		}
+	}
+
+
+	public function daftar()
+	{
+		$serialize = $this->input->post();
+		if($this->cek_email($serialize['email'])>0)
+		{
+			echo "email_terdaftar";
+			die();
+		}
+
+		$serialize['tgl_daftar'] = date('Y-m-d H:i:s');
+
+		$this->m_pengguna->insert($serialize); 
+		if($this->db->affected_rows() > 0)
+		{
+			echo "berhasi_daftar";
+			die();
+		}
+		
 
 	}
 
