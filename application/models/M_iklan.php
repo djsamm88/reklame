@@ -11,10 +11,11 @@ class M_iklan extends CI_Model {
 
 	public function cari($where)
 	{
-		$this->db->select('a.*,b.name AS nama_provinsi,c.name AS nama_kota')
+		$this->db->select('a.*,b.name AS nama_provinsi,c.name AS nama_kota,d.perusahaan')
 				->from('tbl_iklan a ')
 				->join('provinces b','a.provinsi=b.id','left')
 				->join('regencies c','a.kota_kab=c.id','left')				
+				->join('tbl_pengguna d','a.id_pengguna=d.id_pengguna','left')				
 				->where($where)
 				->order_by('id_iklan', 'DESC');
 		
@@ -23,6 +24,34 @@ class M_iklan extends CI_Model {
 		return $query;
 
 	}
+
+	public function all()
+	{
+		$this->db->select('a.*,b.name AS nama_provinsi,c.name AS nama_kota,d.perusahaan')
+				->from('tbl_iklan a ')
+				->join('provinces b','a.provinsi=b.id','left')
+				->join('regencies c','a.kota_kab=c.id','left')				
+				->join('tbl_pengguna d','a.id_pengguna=d.id_pengguna','left')								
+				->order_by('id_iklan', 'DESC');
+		
+		$query = $this->db->get();
+
+		return $query;
+
+	}
+
+	/*	
+	public function all()
+	{
+		$q = $this->db->query('SELECT a.*,b.name AS nama_provinsi,c.name AS nama_kota FROM tbl_iklan a 
+									LEFT JOIN provinces b ON a.provinsi=b.id 
+									LEFT JOIN regencies c ON a.kota_kab=c.id 
+								ORDER BY id_iklan DESC								
+			');
+		return $q;	
+	}
+	*/
+
 
 	public function rekomendasi($limit)
 	{
@@ -36,17 +65,7 @@ class M_iklan extends CI_Model {
 		return $q;	
 	}	
 
-	public function all()
-	{
-		$q = $this->db->query('SELECT a.*,b.name AS nama_provinsi,c.name AS nama_kota FROM tbl_iklan a 
-									LEFT JOIN provinces b ON a.provinsi=b.id 
-									LEFT JOIN regencies c ON a.kota_kab=c.id 
-								ORDER BY id_iklan DESC								
-			');
-		return $q;	
-	}
-
-
+	/*
 	public function by_id($id)
 	{
 		
@@ -56,6 +75,23 @@ class M_iklan extends CI_Model {
 								WHERE id_iklan='$id'
 								");
 		return $q;	
+	}
+	*/
+
+	public function by_id($where)
+	{
+		$this->db->select('a.*,b.name AS nama_provinsi,c.name AS nama_kota,d.perusahaan')
+				->from('tbl_iklan a ')
+				->join('provinces b','a.provinsi=b.id','left')
+				->join('regencies c','a.kota_kab=c.id','left')				
+				->join('tbl_pengguna d','a.id_pengguna=d.id_pengguna','left')				
+				->where($where)
+				->order_by('id_iklan', 'DESC');
+		
+		$query = $this->db->get();
+
+		return $query;
+
 	}
 	
 

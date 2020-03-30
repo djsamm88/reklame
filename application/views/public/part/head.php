@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/dark.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/font-icons.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/datepicker.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/magnific-popup.css" type="text/css" />
 
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/responsive.css" type="text/css" />

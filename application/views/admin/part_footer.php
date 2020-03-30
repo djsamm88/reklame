@@ -65,7 +65,7 @@
 
     <script src="<?php echo base_url()?>assets_admin/pace/pace.min.js"></script>
 
-
+        
 
 <!-- google maps api -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvnP6-IQADuP461VqlXqYjdm6sWlkhVWs&sensor=false&libraries=places"></script>
@@ -124,4 +124,6 @@ function uang(input)
     });
 
 }
+
+
 </script>

@@ -94,20 +94,14 @@
 
 								<!-- Product Single - Price
 								============================================= -->
-								<div class="product-price"> Rp.<?php echo rupiah($row->harga_1_bulan)?>/Bulan</div><!-- Product Single - Price End -->
-
-								<!-- Product Single - Rating
-								============================================= -->
-								<div class="product-rating">
-									<i class="icon-star3"></i>
-									<i class="icon-star3"></i>
-									<i class="icon-star3"></i>
-									<i class="icon-star-half-full"></i>
-									<i class="icon-star-empty"></i>
-								</div><!-- Product Single - Rating End -->
+								
+								<div class="product-price"><?php echo $row->perusahaan?></div>
+								<div class="clear"></div>
+								<small><i class="icon-line-circle-check"></i> Pemilik terverifikasi</small>
+								
 
 								<div class="clear"></div>
-								<div class="line"></div>
+								
 
 
 								<!-- Product Single - Short Description
@@ -125,48 +119,52 @@
 									<tr><td>Provinsi</td><td><?php echo $row->nama_provinsi?></td></tr>
 									
 								</table>
-								<div class="line"></div>
+								
 
 
 							</div>
 
 							<div class="col_one_fifth col_last">
 
-								<a href="#" title="Brand Logo" class="d-none d-md-block"><img class="image_fade" src="images/shop/brand.jpg" alt="Brand Logo"></a>
+								<div class="product-price" id="hargaSewa"> 
+									Rp.<?php echo rupiah($row->harga_1_bulan)?>/Bulan
+								</div>
+								<!-- Product Single - Price End -->
 
 								<div class="divider divider-center"><i class="icon-circle-blank"></i></div>
 
 								<div class="feature-box fbox-plain fbox-dark fbox-small">
-									<div class="fbox-icon">
-										<i class="icon-thumbs-up2"></i>
-									</div>
-									<h3>100% Original</h3>
-									<p class="notopmargin">We guarantee you the sale of Original Brands.</p>
+									<form id="form_pemesanan">
+									<h3>Durasi Sewa:</h3>
+									<select class="form-control" id="lama_pesan" >
+										<option value="harga_1_minggu"> 1 Minggu</option>
+										<option value="harga_2_minggu"> 2 Minggu</option>
+										<option value="harga_1_bulan" selected> 1 Bulan</option>
+										<option value="harga_3_bulan"> 3 Bulan</option>
+										<option value="harga_6_bulan"> 6 Bulan</option>
+										<option value="harga_1_tahun"> 1 Tahun</option>
+
+									</select>
+									<?php 
+										
+										$mulai = strtotime(date('Y-m-d'));
+										$mulai = strtotime("+7 day", $mulai);
+										$akhir = strtotime("+30 day", $mulai);
+										
+									?>
+									<br>
+									Mulai:
+									<input type="text" name="tgl_mulai" id="tgl_mulai" class="form-control datepicker_mulai" value="<?php echo date('Y-m-d', $mulai)?>">
+
+									s/d:
+									<input type="text" name="tgl_akhir" id="tgl_akhir" class="form-control" value="<?php echo date('Y-m-d', $akhir)?>" readonly>
+									<br>
+									<button type="submit" class="btn btn-primary btn-block">Pesan</button>
+									<br>
+									<button type="button" class="btn btn-success btn-block">Tanya Pemilik</button>
+									</form>
 								</div>
 
-								<div class="feature-box fbox-plain fbox-dark fbox-small">
-									<div class="fbox-icon">
-										<i class="icon-credit-cards"></i>
-									</div>
-									<h3>Payment Options</h3>
-									<p class="notopmargin">We accept Visa, MasterCard and American Express.</p>
-								</div>
-
-								<div class="feature-box fbox-plain fbox-dark fbox-small">
-									<div class="fbox-icon">
-										<i class="icon-truck2"></i>
-									</div>
-									<h3>Free Shipping</h3>
-									<p class="notopmargin">Free Delivery to 100+ Locations on orders above $40.</p>
-								</div>
-
-								<div class="feature-box fbox-plain fbox-dark fbox-small">
-									<div class="fbox-icon">
-										<i class="icon-undo"></i>
-									</div>
-									<h3>30-Days Returns</h3>
-									<p class="notopmargin">Return or exchange items purchased within 30 days.</p>
-								</div>
 
 							</div>
 

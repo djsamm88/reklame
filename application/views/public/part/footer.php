@@ -243,6 +243,7 @@
 	<!-- Footer Scripts
 	============================================= -->
 	<script src="<?php echo base_url()?>assets/js/functions.js"></script>
+	<script src="<?php echo base_url()?>assets/js/datepicker.js"></script>
 
 
 
@@ -251,37 +252,194 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("#pilih_prov").val("<?php echo $sel_provinsi?>").trigger("change");	
+$(document).ready(function(){
+	$("#pilih_prov").val("<?php echo $sel_provinsi?>").trigger("change");	
 
-		$("#t4_judul_cari").empty()
-		$("#t4_judul_cari").append($("#pilih_prov option:selected").text())
-		$("#t4_judul_cari").append($("#kota_kab option:selected").text())
-		$("#t4_judul_cari").append($("#pilih_media option:selected").text())
-	})
+	$("#t4_judul_cari").empty()
+	$("#t4_judul_cari").append($("#pilih_prov option:selected").text())
+	$("#t4_judul_cari").append($("#kota_kab option:selected").text())
+	$("#t4_judul_cari").append($("#pilih_media option:selected").text());
 
-	$("#pilih_prov").on("change",function(){
-		
-		var sel = "<?php echo $sel_kota_kab?>"; //ini dari header
 
-		$.get("<?php echo base_url()?>index.php/welcome/ambil_kab/"+$(this).val(),function(e){
-			//console.log(e);
-			$("#kota_kab").empty();				
-			$("#kota_kab").append("<option value=''>--- Pilih Kota/Kab ---</option>");
-			$.each(e,function(a,b){
-				
-				if(b.id==sel)
-				{
-					var select = "selected";
-					console.log("testing="+b.id+"=="+sel);
-				}else{
-					var select = "";
-				}
+	
 
-				$("#kota_kab").append("<option value='"+b.id+"' "+select+">"+b.name+"</option>");
-			})
+})
+
+
+function dateToString(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+function addMonths(date, months) {
+    var d = date.getDate();
+    date.setMonth(date.getMonth() + +months);
+    if (date.getDate() != d) {
+      date.setDate(0);
+    }
+    return date;
+}
+
+
+
+$('.datepicker_mulai').datepicker({
+	autoclose: true,
+	startDate: '+7d',
+	format: "yyyy-mm-dd",
+
+}).on("change",function(){
+	console.log($(this).val())
+	var e = $("#lama_pesan").val();
+	var akhir;
+
+	var tgl = $(this).val().split("-");
+	var f = new Date(tgl[0], tgl[1] - 1, tgl[2]);	
+	var minggu = new Date(f);
+	
+	
+	
+	if(e=="harga_1_minggu")
+	{
+		akhir=dateToString(minggu.setDate(minggu.getDate() + 7));
+	}
+
+	if(e=="harga_2_minggu")
+	{
+		akhir=dateToString(minggu.setDate(minggu.getDate() + 14));
+	}
+
+	if(e=="harga_1_bulan")
+	{
+		akhir=dateToString(addMonths(f,1).toString());
+	}
+
+	if(e=="harga_3_bulan")
+	{
+		akhir=dateToString(addMonths(f,3).toString());
+	}
+
+	if(e=="harga_6_bulan")
+	{
+		akhir=dateToString(addMonths(f,6).toString());
+	}
+
+	if(e=="harga_1_tahun")
+	{
+		akhir=dateToString(addMonths(f,12).toString());
+	}
+
+	console.log(akhir);
+	$("#tgl_akhir").val(akhir);
+	
+})
+
+
+
+var harga_1_minggu = "<?php echo $row->harga_1_minggu?>";
+var harga_2_minggu = "<?php echo $row->harga_2_minggu?>";
+var harga_1_bulan = "<?php echo $row->harga_1_bulan?>";
+var harga_3_bulan = "<?php echo $row->harga_3_bulan?>";
+var harga_6_bulan = "<?php echo $row->harga_6_bulan?>";
+var harga_1_tahun = "<?php echo $row->harga_1_tahun?>";
+
+
+$("#lama_pesan").on("change",function(){
+	var e = $(this).val();
+	var harga;
+	var akhir;
+
+
+	var tgl = $(".datepicker_mulai").val().split("-");
+	var f = new Date(tgl[0], tgl[1] - 1, tgl[2]);	
+	var minggu = new Date(f);
+
+
+	if(e=="harga_1_minggu")
+	{
+		harga=harga_1_minggu;
+		akhir=dateToString(minggu.setDate(minggu.getDate() + 7));
+	}
+
+	if(e=="harga_2_minggu")
+	{
+		harga=harga_2_minggu;
+		akhir=dateToString(minggu.setDate(minggu.getDate() + 14));
+	}
+
+	if(e=="harga_1_bulan")
+	{
+		harga=harga_1_bulan;
+		akhir=dateToString(addMonths(f,1).toString());
+	}
+
+	if(e=="harga_3_bulan")
+	{
+		harga=harga_3_bulan;
+		akhir=dateToString(addMonths(f,3).toString());
+	}
+
+	if(e=="harga_6_bulan")
+	{
+		harga=harga_6_bulan;
+		akhir=dateToString(addMonths(f,6).toString());
+	}
+
+	if(e=="harga_1_tahun")
+	{
+		harga=harga_1_tahun;
+		akhir=dateToString(addMonths(f,12).toString());
+	}
+
+
+	var satuan = $("#lama_pesan option:selected").text();
+
+	if(harga=="" || harga=="0")
+	{
+		alert("Maaf, harga tidak ada untuk "+satuan);
+		$(this).val('harga_1_bulan').trigger('change');
+
+		return false;
+	}
+	
+	
+
+
+	$("#hargaSewa").html(formatRupiah(harga,'Rp.')+" / "+satuan);
+	$("#tgl_akhir").val(akhir);
+})
+
+
+$("#pilih_prov").on("change",function(){
+	
+	var sel = "<?php echo $sel_kota_kab?>"; //ini dari header
+
+	$.get("<?php echo base_url()?>index.php/welcome/ambil_kab/"+$(this).val(),function(e){
+		//console.log(e);
+		$("#kota_kab").empty();				
+		$("#kota_kab").append("<option value=''>--- Pilih Kota/Kab ---</option>");
+		$.each(e,function(a,b){
+			
+			if(b.id==sel)
+			{
+				var select = "selected";
+				console.log("testing="+b.id+"=="+sel);
+			}else{
+				var select = "";
+			}
+
+			$("#kota_kab").append("<option value='"+b.id+"' "+select+">"+b.name+"</option>");
 		})
-	});
+	})
+});
 
 
 $("#register_form").on("submit",function(){
@@ -373,6 +531,25 @@ $("#login_member").on("submit",function(){
 	return false;
 })
 
+
+
+/* Fungsi formatRupiah */
+function formatRupiah(angka, prefix){
+	var number_string = angka.replace(/[^,\d]/g, '').toString(),
+	split   		= number_string.split(','),
+	sisa     		= split[0].length % 3,
+	rupiah     		= split[0].substr(0, sisa),
+	ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+	// tambahkan titik jika yang di input sudah menjadi angka ribuan
+	if(ribuan){
+		separator = sisa ? '.' : '';
+		rupiah += separator + ribuan.join('.');
+	}
+
+	rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+	return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+}
 </script>
 
 

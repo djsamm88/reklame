@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class User extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -53,7 +53,7 @@ class Welcome extends CI_Controller {
 		}
 		$data['provinsi'] = $this->m_util->provinsi()->result();
 		$data['media'] = 	$this->m_util->all_media()->result();
-		$data['data'] = $this->m_iklan->by_id(array("id_iklan"=>$id_iklan));
+		$data['data'] = $this->m_iklan->by_id($id_iklan);
 		$this->load->view('public/detail.php',$data);
 	}
 
@@ -65,7 +65,7 @@ class Welcome extends CI_Controller {
 		}
 		$data['provinsi'] = $this->m_util->provinsi()->result();
 		$data['media'] = 	$this->m_util->all_media()->result();
-		$data['data'] = $this->m_iklan->by_id(array("id_iklan"=>$id_iklan));
+		$data['data'] = $this->m_iklan->by_id($id_iklan);
 		$this->load->view('public/detail_kecil.php',$data);
 	}
 

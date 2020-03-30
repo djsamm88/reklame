@@ -11,6 +11,7 @@ class Iklan extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('m_util');
 		$this->load->model('m_iklan');
+		$this->load->model('m_pengguna');
 		$this->load->library('session');
 
 		if ($this->session->userdata('id_admin')=="") {
@@ -32,7 +33,7 @@ class Iklan extends CI_Controller {
 		header("Access-Control-Allow-Origin: *");
 		header("Access-Control-Allow-Headers: *");
 		header('Content-Type: application/json');	
-		$q = $this->m_iklan->by_id($id);
+		$q = $this->m_iklan->by_id(array("id_iklan"=>$id));
 		echo json_encode($q->result());
 
 	}
@@ -50,6 +51,15 @@ class Iklan extends CI_Controller {
 		$rekomendasi = $val=='1'?'0':'1';
 
 		$this->db->query("UPDATE tbl_iklan SET rekomendasi='$rekomendasi' WHERE id_iklan='$id'");
+	}
+
+	public function status()
+	{
+		$id = $this->input->post('id');
+		$val= $this->input->post('val');
+		$rekomendasi = $val=='1'?'0':'1';
+
+		$this->db->query("UPDATE tbl_iklan SET status='$rekomendasi' WHERE id_iklan='$id'");
 	}
 
 	public function simpan()

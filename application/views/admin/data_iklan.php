@@ -42,6 +42,8 @@
                                             <th>Ukuran</th>                                            
                                             <th>tgl</th>
                                             <th>Rekomendasi</th>
+                                            <th>Pemilik</th>
+                                            <th>Status</th>
                                             <th>Action</th>                                                
                                         </tr>
                                     </thead>
@@ -59,6 +61,15 @@
                             $btn_rekomendasi = "<button class='btn btn-xs btn-success' onclick='recomendasi($key->id_iklan,$key->rekomendasi)'>Aktifkan</button>";
                             $key->rekomendasi="No";
                         }
+
+                        if($key->status=='1')
+                        {
+                            $btn_status = "<button class='btn btn-xs btn-warning' onclick='status($key->id_iklan,$key->status)'>Non Aktifkan</button>";
+                            $key->status ="Aktif";
+                        }else{
+                            $btn_status = "<button class='btn btn-xs btn-success' onclick='status($key->id_iklan,$key->status)'>Aktifkan</button>";
+                            $key->status="NonAktif";
+                        }
                         echo "
                             <tr>
                                 <td>$no</td>
@@ -71,6 +82,8 @@
                                 <td>$key->tinggi x $key->lebar M</td>                                
                                 <td>$key->tgl</td>
                                 <td>$key->rekomendasi $btn_rekomendasi</td>
+                                <td>$key->perusahaan</td>
+                                <td>$key->status $btn_status</td>
                                 <td>
                                     <button class='btn btn-xs btn-info  btn-block' onclick='edit($key->id_iklan,2)'>View</button>
 
@@ -78,6 +91,7 @@
 
                                     <button class='btn btn-xs btn-danger btn-block'  onclick='hapus($key->id_iklan)'>Hapus</button>
                                 </td>
+                                
                             </tr>
                         ";
                     }
@@ -159,12 +173,26 @@
                 </div>
                     
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label class="control-label">nama_media_promosi</label>
                             <input class="form-control" name="nama_media_promosi" id="nama_media_promosi" type="text">
                         </div>
                     </div>
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">perusahaan</label>
+                        <select class="form-control" name="id_pengguna" id="id_pengguna" required>
+                            <option value=''>--- Perusahaan ---</option>
+                            <?php 
+                                foreach ($this->m_pengguna->all()->result() as $pengguna) {
+                                    echo "<option value='$pengguna->id_pengguna'>$pengguna->perusahaan</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    </div>
+
                     <div class="col-sm-3">
                         <div class="row">
                             <div class="col-sm-6">
@@ -213,7 +241,7 @@
                         <tr>
                             <td><input class="form-control uang" name="harga_1_minggu" id="harga_1_minggu" type="text"></td>
                             <td><input class="form-control uang" name="harga_2_minggu" id="harga_2_minggu" type="text"></td>
-                            <td><input class="form-control uang" name="harga_1_bulan" id="harga_1_bulan" type="text"></td>
+                            <td><input class="form-control uang" name="harga_1_bulan" id="harga_1_bulan" type="text" required></td>
                             <td><input class="form-control uang" name="harga_3_bulan" id="harga_3_bulan" type="text"></td>
                             <td><input class="form-control uang" name="harga_6_bulan" id="harga_6_bulan" type="text"></td>
                             <td><input class="form-control uang" name="harga_1_tahun" id="harga_1_tahun" type="text"></td>
@@ -522,6 +550,20 @@ function recomendasi(id,val)
     }
 }
 
+
+
+
+function status(id,val)
+{
+    if(confirm("Anda Yakin?"))
+    {
+        $.post("<?php echo base_url()?>index.php/admin/iklan/status/",{id:id,val:val},function(){
+            eksekusi_controller('<?php echo base_url()?>index.php/admin/iklan/');
+        })
+    }
+}
+
+
 /*********** maps ********/
 function mapsTambahBaru()
 {
@@ -664,6 +706,7 @@ function edit(id,jenis)
         $("#lat_dekat_4").val(x.lat_dekat_4);
         $("#lng_dekat_4").val(x.lng_dekat_4);
         $("#deskripsi").val(x.deskripsi);
+        $("#id_pengguna").val(x.id_pengguna);
         //$(tinymce.get('deskripsi').getBody()).html(x.deskripsi);
 
 
