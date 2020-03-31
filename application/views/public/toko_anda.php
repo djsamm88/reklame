@@ -7,38 +7,7 @@
 	============================================= -->
 	<div id="wrapper" class="clearfix">
 
-		<?php 
-			include ("part/header.php");
-			if($data->num_rows()==0)
-			{
-				include ("part/404.php");
-				include ("part/footer.php");
-				die("404 Not Found");
-			}
-
-			$row = $data->result()[0];
-
-			$gbr = array();
-			if($row->gbr_1 != "")
-			{
-				
-				array_push($gbr, $row->gbr_1);
-			}
-
-
-			if($row->gbr_2 != "")
-			{				
-				array_push($gbr, $row->gbr_2);
-			}
-
-
-			if($row->gbr_3 != "")
-			{
-				array_push($gbr, $row->gbr_3);
-			}
-
-			
-		?>
+		
 
 
 		<!-- Page Title

@@ -29,6 +29,7 @@ class Welcome extends CI_Controller {
 		$this->load->model('m_util');
 		$this->load->model('m_iklan');
 		$this->load->model('m_pengguna');
+		$this->load->library('session');
 		date_default_timezone_get('Asia/Jakarta');
 
 
@@ -114,6 +115,9 @@ class Welcome extends CI_Controller {
 			{
 				echo "berhasil_login";
 				$this->login_terakhir($serialize['email']);
+				$sess_data=$query->result_array();
+				$this->session->set_userdata($sess_data[0]);
+				
 				die();
 			}else{
 				echo "password_salah";
@@ -146,6 +150,14 @@ class Welcome extends CI_Controller {
 		}
 		
 
+	}
+
+
+	public function toko_anda()
+	{
+		$data['provinsi'] = $this->m_util->provinsi()->result();
+		$data['media'] = 	$this->m_util->all_media()->result();		
+		$this->load->view('public/toko_anda.php',$data);
 	}
 
 

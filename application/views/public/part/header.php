@@ -23,6 +23,28 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 						<a href=""  class="retina-logo" data-dark-logo="<?php echo base_url()?>assets/images/logo-dark@2x.png"><img src="<?php echo base_url()?>assets/images/logo@2x.png" alt="Canvas Logo"></a>
 					</div><!-- #logo end -->
 
+					<?php 
+					if($this->session->userdata('id_pengguna') !="")
+					{
+					?>
+
+					<div id="top-account" class="dropdown">
+						<a href="#" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="icon-user"></i></a>
+						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+							<a class="dropdown-item tleft" href="#"><b>Hi. <?php echo $this->session->userdata('nama')?></b></a>
+							<a class="dropdown-item tleft" href="#">Toko Anda</a>
+							<a class="dropdown-item tleft" href="#">Messages <span class="badge badge-pill badge-secondary fright" style="margin-top: 3px;">5</span></a>
+							
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item tleft" href="#">Logout <i class="icon-signout"></i></a>
+						</ul>
+					</div>
+					<?php 
+					}
+					?>
+
+
+
 					<!-- Primary Navigation
 					============================================= -->
 					<nav id="primary-menu" class="sub-title">
@@ -78,9 +100,16 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 
 							</li>
 
+							<?php 
+							if($this->session->userdata('id_pengguna') =="")
+							{
+							?>
 							<li>
 								<button  class=" btn btn-primary nomargin" data-target="#modalDaftar" type="button" data-toggle="modal" style="height: 60px"><i class="icon-line2-login"></i></button>
 							</li>
+							<?php 
+							}
+							?>
 
 						</ul>
 						</form>
