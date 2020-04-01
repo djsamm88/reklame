@@ -146,6 +146,10 @@ class Welcome extends CI_Controller {
 		if($this->db->affected_rows() > 0)
 		{
 			echo "berhasi_daftar";
+			$serialize['id_pengguna'] = $this->db->insert_id();
+			
+			$this->session->set_userdata($serialize);
+
 			die();
 		}
 		
@@ -158,6 +162,23 @@ class Welcome extends CI_Controller {
 		$data['provinsi'] = $this->m_util->provinsi()->result();
 		$data['media'] = 	$this->m_util->all_media()->result();		
 		$this->load->view('public/toko_anda.php',$data);
+	}
+
+	public function update_profil()
+	{
+		$id = $this->input->post('id_pengguna');		
+
+		$serialize = $this->input->post();
+		$this->m_pengguna->update($serialize,$id);
+		die('update');
+	
+		
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url().'index.php/welcome');
 	}
 
 

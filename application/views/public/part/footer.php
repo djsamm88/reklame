@@ -263,6 +263,45 @@ $(document).ready(function(){
 })
 
 
+function hanya_nomor(input)
+{
+        
+    $(input).keyup(function(event) {
+
+      // skip for arrow keys
+      if(event.which >= 37 && event.which <= 40) return;
+
+      // format number
+      $(this).val(function(index, value) {
+        return value
+        .replace(/\D/g, "")
+        ;
+      });
+    });
+
+}
+
+
+function uang(input)
+{
+        
+    $(input).keyup(function(event) {
+
+      // skip for arrow keys
+      if(event.which >= 37 && event.which <= 40) return;
+
+      // format number
+      $(this).val(function(index, value) {
+        return value
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        ;
+      });
+    });
+
+}
+
+
 
 $("#pilih_prov").on("change",function(){
 	
@@ -329,6 +368,7 @@ $("#register_form").on("submit",function(){
 							 .html("<div class='alert alert-success'>Berhasil terdaftar. Mohon tunggu...</div>")
 							 .delay(500)
 							 .fadeIn();
+							 location.reload();
 		}else
 		{
 			$("#info_daftar").hide()
@@ -365,6 +405,7 @@ $("#login_member").on("submit",function(){
 							.html("<div class='alert alert-success'>Berhasil Login. Mohon tunggu...</div>")
 							.delay(500)
 							.fadeIn();
+			location.reload();
 		}else{
 			$("#info_login").hide()
 							.html("<div class='alert alert-danger'>Mohon maaf. Ada masalah: "+e+"</div>")
