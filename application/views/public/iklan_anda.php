@@ -872,5 +872,5 @@ $("#responsive-modal").on("hidden.bs.modal", function () {
     iklan_anda();
 });
 
-
+$("#badge_produk").html("<?php echo $iklan_anda->num_rows()?>");
 </script>

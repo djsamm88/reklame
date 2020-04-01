@@ -46,9 +46,23 @@
 
 										<ul class="tab-nav clearfix">
 											<li><a href="#tab-feeds"><i class="icon-user"></i> Profil</a></li>
-											<li><a href="#tab-posts" id="tab_pesanan" onclick="pesanan_anda()"><i class="icon-cart"></i> Pesanan Anda</a></li>
-											<li><a href="#tab-replies" onclick="iklan_anda()"><i class="icon-store"></i> Produk Anda</a></li>
-											<li><a href="#tab-order" onclick="orderan_anda()"><i class="icon-store"></i> Orderan Baru</a></li>
+											<li>
+												<a href="#tab-posts" id="tab_pesanan" onclick="pesanan_anda()"><i class="icon-cart"></i> Pesanan Anda 
+													<span class="badge badge-pill badge-primary" id="badge_pesanan"><?php echo $pesanan->num_rows()?></span>
+												</a>
+											</li>
+
+											<li>
+												<a href="#tab-replies" onclick="iklan_anda()"><i class="icon-store"></i> Produk Anda
+													<span class="badge badge-pill badge-warning" id="badge_produk"><?php echo $toko->num_rows()?></span>
+												</a>
+											</li>
+											
+											<li>
+												<a href="#tab-order" onclick="orderan_anda()"><i class="icon-store"></i> Orderan Baru
+													<span class="badge badge-pill badge-danger" id="badge_order"><?php echo $orderan->num_rows()?></span>
+												</a>
+											</li>
 											<li><a href="#tab-connections"><i class="icon-users"></i> Connections</a></li>
 										</ul>
 

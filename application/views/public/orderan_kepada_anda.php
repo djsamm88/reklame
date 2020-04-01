@@ -98,4 +98,5 @@ function set_status_trx(id,code)
     }
     
 }
+$("#badge_order").html("<?php echo $orderan->num_rows()?>");
 </script>

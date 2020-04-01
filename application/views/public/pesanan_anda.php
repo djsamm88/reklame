@@ -142,5 +142,5 @@ $("#go_upload").on("submit",function(){
 $("#form_upload_bukti").on("hidden.bs.modal", function () {
     pesanan_anda();
 });
-
+$("#badge_pesanan").html("<?php echo $pesanan->num_rows()?>");
 </script>
