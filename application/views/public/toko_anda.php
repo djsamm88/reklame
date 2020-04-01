@@ -153,10 +153,12 @@ function orderan_anda()
 
 
 function pesanan_anda()
-{	$("#pesanan_anda").empty();
-	$.get("<?php echo base_url()?>index.php/welcome/pesanan_anda",function(x){
-		$("#pesanan_anda").html(x);
+{	
+	$("#pesanan_anda").empty();
+	$.get("<?php echo base_url()?>index.php/welcome/pesanan_anda",function(pes){
+		$("#pesanan_anda").html(pes);
 	})
+	
 }
 </script>
 

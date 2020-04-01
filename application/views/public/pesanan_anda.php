@@ -135,7 +135,7 @@ $("#go_upload").on("submit",function(){
     return false;
 })
 
-pesanan_anda();
+
 $("#responsive-modal").on("hidden.bs.modal", function () {
     iklan_anda();
 });

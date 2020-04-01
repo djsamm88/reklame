@@ -257,6 +257,9 @@
     <script src="<?php echo base_url()?>assets_admin/node_modules/tinymce/tinymce.min.js"></script>
 
 
+    <script src="<?php echo base_url()?>assets_admin/pace/pace.min.js"></script>
+
+        
 
 
 <!-- google maps api -->
@@ -264,6 +267,7 @@
 
 
 <script type="text/javascript">
+$(document).ajaxStart(function() { Pace.restart(); });
 $(document).ready(function(){
 	$("#pilih_prov").val("<?php echo $sel_provinsi?>").trigger("change");	
 
