@@ -136,7 +136,8 @@ $(document).ready(function(){
 })
 
 function iklan_anda()
-{
+{	
+	$("#iklan_anda").empty();
 	$.get("<?php echo base_url()?>index.php/welcome/iklan_anda",function(x){
 		$("#iklan_anda").html(x);
 	})
@@ -144,6 +145,7 @@ function iklan_anda()
 
 function orderan_anda()
 {
+	$("#orderan_anda").empty();
 	$.get("<?php echo base_url()?>index.php/welcome/orderan_anda",function(x){
 		$("#orderan_anda").html(x);
 	})
@@ -151,7 +153,7 @@ function orderan_anda()
 
 
 function pesanan_anda()
-{
+{	$("#pesanan_anda").empty();
 	$.get("<?php echo base_url()?>index.php/welcome/pesanan_anda",function(x){
 		$("#pesanan_anda").html(x);
 	})
