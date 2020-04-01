@@ -1,4 +1,4 @@
-
+<button class="btn btn-primary" onclick="form_tambah()">Tambah Produk</button><br>
 						
 		<div class="table-responsive m-t-40">
         <table id="myTableIklan" class="table table-bordered table-striped">
