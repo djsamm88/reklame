@@ -29,9 +29,11 @@ function status_trx($status=null)
 	$a[0] = 'Menunggu konfirmasi seller';
 	$a[1] = 'Menunggu pembayaran pemesan';
 	$a[2] = 'Menunggu konfirmasi okiklan.com';
-	$a[3] = 'OkIklan menerima pembayaran';
+	$a[3] = 'okiklan.com menerima pembayaran';
 	$a[4] = 'Seller menolak';
-	$a[5] = 'OkIklan menolak';
+	$a[5] = 'okiklan.com menolak';
+	$a[6] = 'Orderan Berjalan';
+	$a[7] = 'Habis Waktu';
 
 	
 	if($status==null)

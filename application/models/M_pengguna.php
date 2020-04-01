@@ -39,6 +39,7 @@ class M_pengguna extends CI_Model {
 	public function pesan($serialize)
 	{
 		$this->db->insert('tbl_transaksi',$serialize);
+		return $this->db->insert_id();
 	}
 
 	public function pesanan($id_pengguna)
@@ -106,6 +107,11 @@ class M_pengguna extends CI_Model {
 
 		return $query;
 
+	}
+
+	public function history_trx($serialize)
+	{
+		$this->db->insert('tbl_history_trx',$serialize);
 	}
 }
 ?>

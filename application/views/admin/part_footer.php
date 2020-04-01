@@ -125,5 +125,22 @@ function uang(input)
 
 }
 
+badge("badge_transaksi");
+badge("badge_konfirmasi",2);
+function badge(id,code=null)
+{
+    if(code==null)
+    {
+        code="";
+    }
+    $.get("<?php echo base_url()?>index.php/admin/iklan/badge/"+code,function(e){
+        if(e=="0")
+        {
+            $("#"+id).hide();    
+        }
+        $("#"+id).html(e);
+        console.log(e);
+    })
+}
 
 </script>

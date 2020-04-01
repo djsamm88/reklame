@@ -1,7 +1,7 @@
 
 
 <div class="table-responsive m-t-40">
-<table id="myTable" class="table table-bordered table-striped">
+<table id="myTablePesanan" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>No</th>                                 
@@ -32,6 +32,8 @@ if($key->status_pesanan=='1')
 }else if($key->status_pesanan=='2'){
 
     $info = "Kami akan segera memproses pesanan anda. Silahkan menunggu. <a href='".base_url()."uploads/$key->bukti_bayar' target='blank'>Bukti bayar anda</a>";
+}else if($key->status_pesanan=='3'){
+    $info = "<font color=red>Orderan anda akan dipersiapkan. Bersiap dihubungi pihak seller.</font>";
 
 }else{
     $info = "";
@@ -103,6 +105,7 @@ echo "
 </div>
 
 <script type="text/javascript">
+$("#myTablePesanan").dataTable({});
 $('.dropify').dropify();        
 function upload_bukti(id_trx)
 {
@@ -136,8 +139,8 @@ $("#go_upload").on("submit",function(){
 })
 
 
-$("#responsive-modal").on("hidden.bs.modal", function () {
-    iklan_anda();
+$("#form_upload_bukti").on("hidden.bs.modal", function () {
+    pesanan_anda();
 });
 
 </script>

@@ -1,7 +1,7 @@
 
 
 <div class="table-responsive m-t-40">
-<table id="myTable" class="table table-bordered table-striped">
+<table id="myTableOrderan" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>No</th>                                 
@@ -29,9 +29,15 @@ if($key->status_pesanan=='0')
 {
     $btn = "<a href='#' onclick='set_status_trx($key->id_trx,1);return false;' class='btn btn-xs btn-success  btn-block' >Terima</a>";
     $btn.= "<a href='#' onclick='set_status_trx($key->id_trx,3);return false;' class='btn btn-xs btn-danger  btn-block' >Tolak</a>";
+    $info = "";
+}else if($key->status_pesanan=='3')
+{
+    $info = "<b><font color=red>Silahkan cek rekening anda. dan bersiap pemasangan.</font></b>";
+    $btn = "<a href='#' onclick='set_status_trx($key->id_trx,6);return false;' class='btn btn-xs btn-success  btn-block' >Konfirmasi</a>";
     
 }else{
     $btn ="";
+    $info = "";
 }
 
 $kategori_harga = str_replace("_", " ", $key->kategori_harga);
@@ -55,7 +61,7 @@ echo "
         
         <td>$key->nama_pemesan - $key->perusahaan_pemesan - $key->alamat_pemesan </td>
         <td>$key->tgl_pesan</td>	                                
-        <td><b> $status  </b> - code [$key->status_pesanan]</td>
+        <td><b> $status  </b> - code [$key->status_pesanan] <b> $info</td>
         <td>$key->tgl_mulai </td>
         <td>$key->tgl_akhir </td>
         <td>".rupiah($harga)." <br> $kategori_harga </td>
@@ -79,7 +85,7 @@ echo "
 
 
 <script type="text/javascript">
-    
+$('#myTableOrderan').DataTable({});
 
 
 function set_status_trx(id,code)

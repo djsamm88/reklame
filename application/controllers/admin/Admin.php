@@ -28,6 +28,8 @@ class Admin extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('m_util');
 		$this->load->model('m_admin');
+		$this->load->model('m_pengguna');
+		$this->load->model('m_iklan');
 		$this->load->library('session');
 
 		if ($this->session->userdata('id_admin')=="") {
@@ -39,7 +41,9 @@ class Admin extends CI_Controller {
 	public function index()
 	{
 	
-		$data['data'] = "";		
+		$data['pengguna'] = $this->m_pengguna->all()->num_rows();		
+		$data['produk'] = $this->m_iklan->all()->num_rows();		
+		$data['konfirmasi'] = $this->m_iklan->orderan(2)->num_rows();		
 		$this->load->view('admin/admin.php',$data);
 
 	}

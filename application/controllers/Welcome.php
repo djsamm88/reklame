@@ -208,9 +208,13 @@ class Welcome extends CI_Controller {
 		
 		$serialize['tgl'] = date('Y-m-d H:i:s');
 
-		$this->m_pengguna->pesan($serialize); 
+		$id_trx = $this->m_pengguna->pesan($serialize); 
 		if($this->db->affected_rows() > 0)
 		{
+			
+			$history = array("id_trx"=>$id_trx,"status"=>0);
+			$this->m_pengguna->history_trx($history);
+
 			echo "pesanan_berhasil";		
 			die();
 		}
@@ -303,6 +307,9 @@ class Welcome extends CI_Controller {
 		$bukti = upload_file('bukti_bayar');	
 		$this->db->query("UPDATE tbl_transaksi SET bukti_bayar='$bukti',status='2' WHERE id='$id'");
 
+		$history = array("id_trx"=>$id,"status"=>2);
+		$this->m_pengguna->history_trx($history);
+
 	}
 
 
@@ -312,6 +319,9 @@ class Welcome extends CI_Controller {
 		$code = $this->input->post('code');
 
 		$this->db->query("UPDATE tbl_transaksi SET status='$code' WHERE id='$id'");
+
+		$history = array("id_trx"=>$id,"status"=>$code);
+		$this->m_pengguna->history_trx($history);
 	}
 
 	public function iklan_by_id($id)

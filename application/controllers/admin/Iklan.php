@@ -28,6 +28,35 @@ class Iklan extends CI_Controller {
 		$this->load->view('admin/data_iklan.php',$data);
 	}
 
+	public function transaksi()
+	{
+		$data['transaksi']	= $this->m_iklan->orderan();
+		$this->load->view('admin/data_transaksi.php',$data);	
+	}
+
+	public function konfirmasi()
+	{
+		$data['transaksi']	= $this->m_iklan->orderan(2);
+		$this->load->view('admin/data_transaksi.php',$data);	
+	}
+
+	public function badge($status=null)
+	{
+		echo $this->m_iklan->orderan($status)->num_rows();
+	}
+
+
+	public function set_status_trx()
+	{
+		$id = $this->input->post('id');
+		$code = $this->input->post('code');
+
+		$this->db->query("UPDATE tbl_transaksi SET status='$code' WHERE id='$id'");
+
+		$history = array("id_trx"=>$id,"status"=>$code);
+		$this->m_pengguna->history_trx($history);
+	}
+
 	public function by_id($id)
 	{
 		header("Access-Control-Allow-Origin: *");
