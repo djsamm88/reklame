@@ -16,6 +16,30 @@
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/animate.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/datepicker.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/magnific-popup.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/components/bs-datatable.css" type="text/css" />
+
+
+
+    <link rel="stylesheet" href="<?php echo base_url()?>assets_admin/node_modules/dropify/dist/css/dropify.min.css">
+    <link href="<?php echo base_url()?>assets_admin/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url()?>assets_admin/node_modules/select2/dist/css/select2_bootstrap.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?php echo base_url()?>assets_admin/dist/css/pages/google-vector-map.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>assets_admin/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="<?php echo base_url()?>assets_admin/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+
+    <link href="<?php echo base_url()?>assets_admin/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+
+    
+    <link href="<?php echo base_url()?>assets_admin/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+
+
+    <link rel="stylesheet" href="<?php echo base_url()?>assets_admin/node_modules/html5-editor/bootstrap-wysihtml5.css" />
+
+    <link rel="stylesheet" href="<?php echo base_url()?>assets_admin/pace/pace.min.css">
+
+
+
 
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/css/responsive.css" type="text/css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />

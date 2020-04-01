@@ -24,6 +24,25 @@ function upload_file($name_field){
     }
 }
 
+function status_trx($status=null)
+{
+	$a[0] = 'Menunggu konfirmasi seller';
+	$a[1] = 'Menunggu pembayaran pemesan';
+	$a[2] = 'Menunggu konfirmasi okiklan.com';
+	$a[3] = 'OkIklan menerima pembayaran';
+	$a[4] = 'Seller menolak';
+	$a[5] = 'OkIklan menolak';
+
+	
+	if($status==null)
+	{
+		return $a;
+	}else{
+		return $a[$status];	
+	}
+	
+}
+
 
 if ( ! function_exists('hanya_nomor'))
 {

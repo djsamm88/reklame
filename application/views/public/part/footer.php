@@ -244,6 +244,18 @@
 	============================================= -->
 	<script src="<?php echo base_url()?>assets/js/functions.js"></script>
 	<script src="<?php echo base_url()?>assets/js/datepicker.js"></script>
+	<script src="<?php echo base_url()?>assets/js/components/bs-datatable.js"></script>
+	    	
+
+
+
+    <script src="<?php echo base_url()?>assets_admin/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="<?php echo base_url()?>assets_admin/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+
+    <script src="<?php echo base_url()?>assets_admin/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets_admin/node_modules/multiselect/js/jquery.multi-select.js"></script>
+    <script src="<?php echo base_url()?>assets_admin/node_modules/tinymce/tinymce.min.js"></script>
+
 
 
 

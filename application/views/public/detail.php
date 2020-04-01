@@ -125,7 +125,7 @@
 							</div>
 
 							<div class="col_one_fifth col_last">
-								<?php print_r($this->session->userdata())?>
+								<?php //print_r($this->session->userdata())?>
 								<div class="product-price" id="hargaSewa"> 
 									Rp.<?php echo rupiah($row->harga_1_bulan)?>/Bulan
 								</div>
@@ -135,8 +135,11 @@
 
 								<div class="feature-box fbox-plain fbox-dark fbox-small">
 									<form id="form_pemesanan">
+										<input type="hidden" name="harga" id="harga" value="<?php echo ($row->harga_1_bulan)?>">
+										<input type="hidden" name="id_pengguna" id="id_pengguna" value="<?php echo ($this->session->userdata('id_pengguna'))?>">
+										<input type="hidden" name="id_iklan" id="id_iklan" value="<?php echo ($row->id_iklan)?>">
 									<h3>Durasi Sewa:</h3>
-									<select class="form-control" id="lama_pesan" >
+									<select class="form-control" id="lama_pesan" name="kategori_harga">
 										<option value="harga_1_minggu"> 1 Minggu</option>
 										<option value="harga_2_minggu"> 2 Minggu</option>
 										<option value="harga_1_bulan" selected> 1 Bulan</option>
@@ -209,6 +212,25 @@
 		</section><!-- #content end -->
 
 
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalKonfirmasi">
+<div class="modal-dialog modal-lg">
+	<div class="modal-body">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">Konfirmasi pemesanan</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div id="t4_modalKonfirmasi"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
 <?php 
 include ("part/footer.php");
 ?>
@@ -239,9 +261,38 @@ $("#form_pemesanan").on("submit",function(){
 		return false;
 	}
 
+	$("#modalKonfirmasi").modal('show');
+	$("#t4_modalKonfirmasi").html($(this).serialize());
 
+	var content = '<table class="table"><tr><td>Jenis Media</td><td><?php echo $row->jenis_media_promosi?></td></tr>'+
+					'<tr><td>Orientasi</td><td><?php echo $row->orientasi?></td></tr>'+
+					'<tr><td>Venue</td><td><?php echo $row->venue?></td></tr>'+
+					'<tr><td>Penerangan</td><td><?php echo $row->penerangan?></td></tr>'+
+					'<tr><td>Tinggi - Lebar</td><td><?php echo $row->tinggi?>Meter -  <?php echo $row->lebar?>Meter</td></tr></table>';
+	var gbr = "<img src='<?php echo base_url()."uploads/".($gbr[0])?>' width='100%'>";
+	var judul = "<h3><?php echo $row->jenis_media_promosi?> - <?php echo $row->alamat?></h3>";
+
+	var satuan = $("#lama_pesan option:selected").text();
+	var konfirmasi = "<div class=line><div><h4>Total <a>Rp."+formatRupiah($("#harga").val())+"</a> untuk <a>"+satuan+"</a></h4>";
+		konfirmasi += "<div class='row'><div class='col-sm-6'>Harga Media </div><div class='col-sm-6'><a>Rp."+formatRupiah($("#harga").val())+"</a> </div>  </div>";
+		konfirmasi += "<div class='row'><div class='col-sm-6'>Mulai </div><div class='col-sm-6'><a>"+($("#tgl_mulai").val())+"</a> </div>  </div>";
+		konfirmasi += "<div class='row'><div class='col-sm-6'>Selesai </div><div class='col-sm-6'><a>"+($("#tgl_akhir").val())+"</a> </div>  </div>";
+		konfirmasi += "<div class='row'><div class='col-sm-6'>Lama </div><div class='col-sm-6'><a>"+(satuan)+"</a> </div>  </div>";
+
+	var tombol = "<div class='line'></div><button class='btn btn-primary' onclick='konfirmasi()'>Konfirmasi Order</button>";
+
+	$("#t4_modalKonfirmasi").html(judul+gbr+content+konfirmasi+tombol);
+
+	
 	return false;
 })
+
+function konfirmasi()
+{
+	$.post("<?php echo base_url()?>index.php/welcome/pesan",$("#form_pemesanan").serialize(),function(e){
+		console.log(e);
+	});
+}
 
 function dateToString(date) {
     var d = new Date(date),
@@ -392,6 +443,7 @@ $("#lama_pesan").on("change",function(){
 
 	$("#hargaSewa").html(formatRupiah(harga,'Rp.')+" / "+satuan);
 	$("#tgl_akhir").val(akhir);
+	$("#harga").val(harga);
 })
 
 

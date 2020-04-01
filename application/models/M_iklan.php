@@ -40,6 +40,8 @@ class M_iklan extends CI_Model {
 
 	}
 
+	
+
 	/*	
 	public function all()
 	{

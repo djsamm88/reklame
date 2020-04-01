@@ -160,9 +160,35 @@ class Welcome extends CI_Controller {
 	public function toko_anda()
 	{
 		$data['provinsi'] = $this->m_util->provinsi()->result();
-		$data['media'] = 	$this->m_util->all_media()->result();		
+		$data['media'] = 	$this->m_util->all_media()->result();	
+		$data['pesanan'] = $this->m_pengguna->pesanan($this->session->userdata('id_pengguna'));
+		$data['orderan'] = $this->m_pengguna->orderan($this->session->userdata('id_pengguna'));
+
+		$data['toko'] = $this->m_pengguna->toko($this->session->userdata('id_pengguna'));
 		$this->load->view('public/toko_anda.php',$data);
 	}
+
+
+	public function iklan_anda()
+	{
+		$data['iklan_anda'] = $this->m_pengguna->toko($this->session->userdata('id_pengguna'));
+		$this->load->view('public/iklan_anda.php',$data);
+	}
+
+	public function orderan_anda()
+	{
+		$data['orderan'] = $this->m_pengguna->orderan($this->session->userdata('id_pengguna'));
+		$this->load->view('public/orderan_kepada_anda.php',$data);
+	}
+
+	public function pesanan_anda()
+	{
+		$data['pesanan'] = $this->m_pengguna->pesanan($this->session->userdata('id_pengguna'));
+		$this->load->view('public/pesanan_anda.php',$data);
+	}
+
+
+
 
 	public function update_profil()
 	{
@@ -174,6 +200,141 @@ class Welcome extends CI_Controller {
 	
 		
 	}
+
+
+	public function pesan()
+	{
+		$serialize = $this->input->post();
+		
+		$serialize['tgl'] = date('Y-m-d H:i:s');
+
+		$this->m_pengguna->pesan($serialize); 
+		if($this->db->affected_rows() > 0)
+		{
+			echo "pesanan_berhasil";		
+			die();
+		}
+	}
+
+
+	public function simpan_iklan()
+	{
+		$id = $this->input->post('id_iklan');		
+
+		$serialize = $this->input->post();
+        $serialize['harga_1_minggu'] = hanya_nomor($serialize['harga_1_minggu']);
+        $serialize['harga_2_minggu'] = hanya_nomor($serialize['harga_2_minggu']);
+        $serialize['harga_1_bulan'] = hanya_nomor($serialize['harga_1_bulan']);
+        $serialize['harga_3_bulan'] = hanya_nomor($serialize['harga_3_bulan']);
+        $serialize['harga_6_bulan'] = hanya_nomor($serialize['harga_6_bulan']);
+        $serialize['harga_1_tahun'] = hanya_nomor($serialize['harga_1_tahun']);
+        $serialize['id_pengguna'] = $this->session->userdata('id_pengguna');
+
+        //var_dump($serialize);
+		if($id=='')
+		{
+			$serialize['gbr_1'] = upload_file('gbr_1');
+	        $serialize['gbr_2'] = upload_file('gbr_2');
+	        $serialize['gbr_3'] = upload_file('gbr_3');
+
+	        $serialize['surat_tanah_titik_berdiri'] = upload_file('surat_tanah_titik_berdiri');
+	        $serialize['ijin_mendirikan_bangunan'] = upload_file('ijin_mendirikan_bangunan');
+	        $serialize['jaminan_bongkar'] = upload_file('jaminan_bongkar');
+	        $serialize['surat_ketetapan_rencana_kota'] = upload_file('surat_ketetapan_rencana_kota');
+	        $serialize['surat_setoran_pajak_daerah'] = upload_file('surat_setoran_pajak_daerah');
+	        $serialize['ijin_penyelenggaraan_reklame'] = upload_file('ijin_penyelenggaraan_reklame');
+	        $serialize['bukti_asuransi'] = upload_file('bukti_asuransi');
+			
+			$this->m_iklan->insert($serialize);
+			die('insert');
+		}else{
+			if(upload_file('gbr_1')!=""){
+				$serialize['gbr_1'] = upload_file('gbr_1');	
+			}
+
+			if(upload_file('gbr_2')!=""){
+				$serialize['gbr_2'] = upload_file('gbr_2');	
+			}
+			if(upload_file('gbr_3')!=""){
+				$serialize['gbr_3'] = upload_file('gbr_3');	
+			}
+
+			if(upload_file('surat_tanah_titik_berdiri')!=""){
+				$serialize['surat_tanah_titik_berdiri'] = upload_file('surat_tanah_titik_berdiri');	
+			}
+
+			if(upload_file('ijin_mendirikan_bangunan')!=""){
+				$serialize['ijin_mendirikan_bangunan'] = upload_file('ijin_mendirikan_bangunan');	
+			}
+
+			if(upload_file('jaminan_bongkar')!=""){
+				$serialize['jaminan_bongkar'] = upload_file('jaminan_bongkar');	
+			}
+
+			if(upload_file('surat_ketetapan_rencana_kota')!=""){
+				$serialize['surat_ketetapan_rencana_kota'] = upload_file('surat_ketetapan_rencana_kota');	
+			}
+
+			if(upload_file('surat_setoran_pajak_daerah')!=""){
+				$serialize['surat_setoran_pajak_daerah'] = upload_file('surat_setoran_pajak_daerah');	
+			}
+
+
+			if(upload_file('ijin_penyelenggaraan_reklame')!=""){
+				$serialize['ijin_penyelenggaraan_reklame'] = upload_file('ijin_penyelenggaraan_reklame');	
+			}
+
+
+			if(upload_file('bukti_asuransi')!=""){
+				$serialize['bukti_asuransi'] = upload_file('bukti_asuransi');	
+			}
+			
+
+			$this->m_iklan->update($serialize,$id);
+			die('update');
+		}
+		
+	}
+
+
+	public function upload_bukti()
+	{
+		$id = $this->input->post('id');		
+		$bukti = upload_file('bukti_bayar');	
+		$this->db->query("UPDATE tbl_transaksi SET bukti_bayar='$bukti',status='2' WHERE id='$id'");
+
+	}
+
+
+	public function set_status_trx()
+	{
+		$id = $this->input->post('id');
+		$code = $this->input->post('code');
+
+		$this->db->query("UPDATE tbl_transaksi SET status='$code' WHERE id='$id'");
+	}
+
+	public function iklan_by_id($id)
+	{
+		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Headers: *");
+		header('Content-Type: application/json');	
+		$q = $this->m_iklan->by_id(array("id_iklan"=>$id));
+		echo json_encode($q->result());
+
+	}
+
+
+	public function hapus()
+	{
+		$id = $this->input->post('id');
+		$val= $this->input->post('val');
+		$rekomendasi = $val=='1'?'0':'1';
+
+		$this->db->query("UPDATE tbl_iklan SET status='$rekomendasi' WHERE id_iklan='$id'");
+	}
+
+
 
 	public function logout()
 	{
