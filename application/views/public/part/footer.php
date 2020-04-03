@@ -278,6 +278,19 @@ $(document).ready(function(){
 
 })
 
+badge_all();
+function badge_all()
+{
+	$.get("<?php echo base_url()?>index.php/welcome/badge_all",function(e){
+		var all = e.pesanan+e.orderan;
+
+		if(all=="0")
+		{
+			$(".badge_all").html(e.toko);	
+		}
+		$(".badge_all").html(all);
+	})
+}
 
 function hanya_nomor(input)
 {

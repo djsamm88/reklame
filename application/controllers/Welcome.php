@@ -156,6 +156,18 @@ class Welcome extends CI_Controller {
 
 	}
 
+	public function badge_all()
+	{
+		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Headers: *");
+		header('Content-Type: application/json');
+		$data['pesanan'] = $this->m_pengguna->pesanan($this->session->userdata('id_pengguna'))->num_rows();
+		$data['orderan'] = $this->m_pengguna->orderan($this->session->userdata('id_pengguna'))->num_rows();
+		$data['toko'] = $this->m_pengguna->toko($this->session->userdata('id_pengguna'))->num_rows();
+		echo json_encode($data);
+
+	}
+
 
 	public function toko_anda()
 	{

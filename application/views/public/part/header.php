@@ -29,10 +29,10 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 					?>
 
 					<div id="top-account" class="dropdown">
-						<a href="#" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="icon-user"></i></a>
+						<a href="#" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="icon-user"></i> <span class="badge badge-pill badge-danger badge_all" ><span></a>
 						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
 							<a class="dropdown-item tleft" href="#"><b>Hi. <?php echo $this->session->userdata('nama')?></b></a>
-							<a class="dropdown-item tleft" href="<?php echo base_url()?>index.php/welcome/toko_anda">Toko Anda</a>
+							<a class="dropdown-item tleft" href="<?php echo base_url()?>index.php/welcome/toko_anda">Transaksi Anda <span class="badge badge-pill badge-danger badge_all" ><span></a>
 							<a class="dropdown-item tleft" href="#">Messages <span class="badge badge-pill badge-secondary fright" style="margin-top: 3px;">5</span></a>
 							
 							<div class="dropdown-divider"></div>
