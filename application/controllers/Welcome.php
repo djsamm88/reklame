@@ -169,8 +169,35 @@ class Welcome extends CI_Controller {
 	}
 
 
+	public function container_chat($id_pengguna)
+	{
+
+		if ($this->session->userdata('id_pengguna')=="") {
+			redirect(base_url().'index.php/welcome');
+		}
+		$data['provinsi'] = $this->m_util->provinsi()->result();
+		$data['media'] = 	$this->m_util->all_media()->result();	
+		$data['pesanan'] = $this->m_pengguna->pesanan($this->session->userdata('id_pengguna'));
+		$data['orderan'] = $this->m_pengguna->orderan($this->session->userdata('id_pengguna'));
+
+		$q = $this->m_pengguna->by_id($this->session->userdata('id_pengguna'));
+		$data['dari'] = $q->result_array()[0];
+
+		$qq = $this->m_pengguna->by_id($id_pengguna);
+		$data['kpd'] = $qq->result_array()[0];
+		$data['list_chat'] = $this->m_pengguna->list_chat();
+		
+		$this->load->view('public/container_chat.php',$data);
+	}
+
+
+
 	public function toko_anda()
 	{
+
+		if ($this->session->userdata('id_pengguna')=="") {
+			redirect(base_url().'index.php/welcome');
+		}
 		$data['provinsi'] = $this->m_util->provinsi()->result();
 		$data['media'] = 	$this->m_util->all_media()->result();	
 		$data['pesanan'] = $this->m_pengguna->pesanan($this->session->userdata('id_pengguna'));
@@ -199,7 +226,22 @@ class Welcome extends CI_Controller {
 		$this->load->view('public/pesanan_anda.php',$data);
 	}
 
+	public function chating_anda($id_pengguna)
+	{
+		$q = $this->m_pengguna->by_id($this->session->userdata('id_pengguna'));
+		$data['dari'] = $q->result_array()[0];
 
+		$qq = $this->m_pengguna->by_id($id_pengguna);
+		$data['kpd'] = $qq->result_array()[0];
+		
+		$this->load->view('public/chat.php',$data);
+	}
+
+	public function simpan_chat()
+	{
+		$data = $this->input->post();
+		$this->db->insert('tbl_chat',$data);
+	}
 
 
 	public function update_profil()

@@ -44,7 +44,7 @@ class M_pengguna extends CI_Model {
 
 	public function pesanan($id_pengguna)
 	{
-		$this->db->select('x.id AS id_trx, x.bukti_bayar,x.tgl_update AS tgl_pesan,x.tgl_mulai,x.tgl_akhir,x.status AS status_pesanan ,x.kategori_harga ,a.*,b.name AS nama_provinsi,c.name AS nama_kota,d.perusahaan,d.nama AS nama_pemilik')
+		$this->db->select('x.id AS id_trx, x.bukti_bayar,x.tgl_update AS tgl_pesan,x.tgl_mulai,x.tgl_akhir,x.status AS status_pesanan ,x.kategori_harga ,a.*,b.name AS nama_provinsi,c.name AS nama_kota,d.perusahaan,d.nama AS nama_pemilik,d.id_pengguna AS id_pemilik')
 				->from('tbl_transaksi x ')
 				->join('tbl_iklan a','a.id_iklan=x.id_iklan','left')
 				->join('provinces b','a.provinsi=b.id','left')
@@ -74,7 +74,8 @@ class M_pengguna extends CI_Model {
 				
 				f.nama AS nama_pemesan,
 				f.perusahaan AS perusahaan_pemesan,
-				f.alamat AS alamat_pemesan
+				f.alamat AS alamat_pemesan,
+				f.id_pengguna AS id_pemesan
 			FROM tbl_transaksi x
 			LEFT JOIN tbl_iklan a ON a.id_iklan=x.id_iklan
 			LEFT JOIN provinces b ON a.provinsi=b.id
@@ -89,6 +90,28 @@ class M_pengguna extends CI_Model {
 		
 		return $query;
 
+	}
+
+	public function list_chat()
+	{
+		$id_pengguna = $this->session->userdata('id_pengguna');
+		$q = $this->db->query("SELECT b.*
+								FROM 
+								(
+								    SELECT *
+								    FROM(
+								            SELECT kpd_id AS id FROM `tbl_chat` GROUP BY kpd_id
+								        )a
+								    UNION ALL 
+								      (
+								        SELECT dari_id AS id FROM `tbl_chat` GROUP BY dari_id
+								      )
+								)a
+								INNER JOIN tbl_pengguna b ON a.id=b.id_pengguna
+								WHERE a.id<>'$id_pengguna'
+								GROUP BY a.id
+								");
+		return $q;
 	}
 
 

@@ -63,7 +63,7 @@
 													<span class="badge badge-pill badge-danger" id="badge_order"><?php echo $orderan->num_rows()?></span>
 												</a>
 											</li>
-											<li><a href="#tab-connections"><i class="icon-users"></i> Connections</a></li>
+											<li><a href="#tab-connections" onclick="chating_anda()"><i class="icon-users"></i> Chatting</a></li>
 										</ul>
 
 										<div class="tab-container">
@@ -95,9 +95,7 @@
 
 
 											</div>
-											<div class="tab-content clearfix" id="tab-connections">
-												Chating
-											</div>
+											
 
 										</div>
 
@@ -173,6 +171,15 @@ function pesanan_anda()
 		$("#pesanan_anda").html(pes);
 	})
 	
+}
+
+function chating_anda()
+{
+	$("#chating_anda").html('');
+	$("#chating_anda").empty();	
+	$.get("<?php echo base_url()?>index.php/welcome/chating_anda",function(pes){
+		$("#chating_anda").html(pes);
+	})
 }
 </script>
 

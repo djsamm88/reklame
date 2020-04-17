@@ -28,6 +28,7 @@ class Cari extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('m_util');
 		$this->load->model('m_iklan');
+		$this->load->library('session');
 
 
 	}

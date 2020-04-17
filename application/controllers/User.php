@@ -29,6 +29,7 @@ class User extends CI_Controller {
 		$this->load->model('m_util');
 		$this->load->model('m_iklan');
 		$this->load->model('m_pengguna');
+		$this->load->library('session');
 		date_default_timezone_get('Asia/Jakarta');
 
 

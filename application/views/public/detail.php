@@ -164,7 +164,7 @@
 									<br>
 									<button type="submit" class="btn btn-primary btn-block">Pesan</button>
 									<br>
-									<button type="button" class="btn btn-success btn-block">Tanya Pemilik</button>
+									<button onclick="chat_pemilik(<?php echo $row->id_pengguna?>);return false;" type="button" class="btn btn-success btn-block">Tanya Pemilik</button>
 									</form>
 								</div>
 
@@ -291,6 +291,7 @@ function konfirmasi()
 {
 	$.post("<?php echo base_url()?>index.php/welcome/pesan",$("#form_pemesanan").serialize(),function(e){
 		console.log(e);
+		window.location.replace("<?php echo base_url()?>index.php/welcome/toko_anda");
 	});
 }
 
@@ -447,6 +448,19 @@ $("#lama_pesan").on("change",function(){
 })
 
 
+
+function chat_pemilik(id_pengguna)
+{
+	console.log(id_pengguna)
+	var session_login = "<?php echo $this->session->userdata('id_pengguna')?>";
+	if(session_login=="")
+	{
+		$("#modalDaftar").modal('show');
+		return false;
+	}
+
+	window.location.replace("<?php echo base_url()?>index.php/welcome/container_chat/"+id_pengguna);
+}
 </script>
 
 </body>

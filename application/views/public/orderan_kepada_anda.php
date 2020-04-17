@@ -45,6 +45,10 @@ $str = $key->kategori_harga;
 $harga = $key->$str;
 
 
+//$chat = "<button class='btn btn-xs btn-success' onclick='chat($key->id_pemesan,\"$key->nama_pemesan\")'>Chat</button>";
+
+$chat = "<a class='btn btn-xs btn-success' href='".base_url()."index.php/welcome/container_chat/$key->id_pemesan'>Chat</a>";
+
 echo "
     <tr>
         <td>$no</td>                        
@@ -59,7 +63,7 @@ echo "
         	$key->alamat, $key->nama_kota, $key->nama_provinsi
         </td>	
         
-        <td>$key->nama_pemesan - $key->perusahaan_pemesan - $key->alamat_pemesan </td>
+        <td>$key->nama_pemesan - $key->perusahaan_pemesan - $key->alamat_pemesan $chat </td>
         <td>$key->tgl_pesan</td>	                                
         <td><b> $status  </b> - code [$key->status_pesanan] <b> $info</td>
         <td>$key->tgl_mulai </td>

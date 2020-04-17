@@ -47,6 +47,9 @@ $harga = $key->$str;
 
 $status = status_trx($key->status_pesanan);
 
+$chat = "<a class='btn btn-xs btn-success' href='".base_url()."index.php/welcome/container_chat/$key->id_pemilik'>Chat</a>"; 
+
+
 echo "
     <tr>
         <td>$no</td>                        
@@ -60,7 +63,7 @@ echo "
         	$key->alamat, $key->nama_kota, $key->nama_provinsi
         </td>	
         
-        <td>$key->nama_pemilik - $key->perusahaan</td>
+        <td>$key->nama_pemilik - $key->perusahaan $chat</td>
         <td>$key->tgl_pesan</td>	                                
         <td> <b>$status</b> code[$key->status_pesanan] <br> <br> $info</td>
         <td>$key->tgl_mulai </td>
