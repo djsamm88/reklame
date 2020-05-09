@@ -149,12 +149,15 @@ chatsRef.on("child_added", function(snap){
 	}
 	document.querySelector('#message_box').innerHTML += (chatHtmlFromObject(snap.val()));		
 
-	if(snap.val().kpd_id==dari_id)
+	if(snap.val().kpd_id==dari_id && snap.val().baca=="belum")
 	{
 		//*********************notification********************************************//
 		new Audio("<?php echo base_url()?>assets_chat/notif.mp3").play();
 		doNotification (snap.val().dari_nama,snap.val().isi,snap.val().tgl);
 		//*********************notification********************************************//	
+
+	    chatsRef.child(snap.key()).update({baca:"sudah"});
+	    $.post("<?php echo base_url()?>index.php/welcome/update_chat/"+snap.val().firebase_id);
 	}
 	
 
@@ -201,11 +204,13 @@ function chatHtmlFromObject(chat)
 }
 
 
+
 //save chat
 document.querySelector('#save').addEventListener("click", function(event){
 
 	chatForm = document.querySelector('#msg_form');
 	event.preventDefault();
+	var firebase_id = "<?php echo date('Ymdhis')?>";
 	if (document.querySelector('#message').value != '') 
 	{
 		chatsRef.push({
@@ -214,6 +219,8 @@ document.querySelector('#save').addEventListener("click", function(event){
 				kpd_id:kpd_id,
 				kpd_nama:kpd_nama,
 				isi:document.querySelector('#message').value,
+				baca:"belum",
+				firebase_id:firebase_id
 				tgl: tgl
 				
 			});
@@ -225,6 +232,8 @@ document.querySelector('#save').addEventListener("click", function(event){
 							dari_nama:dari_nama,
 							kpd_id:kpd_id,
 							kpd_nama:kpd_nama,
+							baca:"belum",
+							firebase_id:firebase_id
 							isi:document.querySelector('#message').value
 						}
 		$.post("<?php echo base_url()?>index.php/welcome/simpan_chat",serialize,function(){

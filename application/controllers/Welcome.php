@@ -237,6 +237,11 @@ class Welcome extends CI_Controller {
 		$this->load->view('public/chat.php',$data);
 	}
 
+	public function update_chat($firebase_id)
+	{
+		$this->db->query("UPDATE tbl_chat SET baca='sudah' WHERE firebase_id='$firebase_id'");
+	}
+	
 	public function simpan_chat()
 	{
 		$data = $this->input->post();
