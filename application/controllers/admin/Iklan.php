@@ -85,10 +85,19 @@ class Iklan extends CI_Controller {
 	public function status()
 	{
 		$id = $this->input->post('id');
-		$val= $this->input->post('val');
+		$val= $this->input->post('val');		
 		$rekomendasi = $val=='1'?'0':'1';
 
 		$this->db->query("UPDATE tbl_iklan SET status='$rekomendasi' WHERE id_iklan='$id'");
+	}
+
+	public function sewa()
+	{
+		$id = $this->input->post('id');
+		$val= $this->input->post('val');
+		$rekomendasi = $val=='Tersedia'?'Tersewa':'Tersedia';
+
+		$this->db->query("UPDATE tbl_iklan SET status_sewa='$rekomendasi' WHERE id_iklan='$id'");
 	}
 
 	public function simpan()

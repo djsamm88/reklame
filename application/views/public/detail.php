@@ -162,7 +162,15 @@
 									s/d:
 									<input type="text" name="tgl_akhir" id="tgl_akhir" class="form-control" value="<?php echo date('Y-m-d', $akhir)?>" readonly>
 									<br>
-									<button type="submit" class="btn btn-primary btn-block">Pesan</button>
+									<?php 
+										echo $row->status_sewa;
+										if($row->status_sewa=='Tersedia'){
+											$disabled = "";
+										}else{
+											$disabled = "disabled";
+										}
+									?>
+									<button type="submit" class="btn btn-primary btn-block" <?php echo $disabled?>>Pesan</button>
 									<br>
 									<button onclick="chat_pemilik(<?php echo $row->id_pengguna?>);return false;" type="button" class="btn btn-success btn-block">Tanya Pemilik</button>
 									</form>

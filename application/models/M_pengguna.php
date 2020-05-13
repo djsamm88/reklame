@@ -122,8 +122,7 @@ class M_pengguna extends CI_Model {
 				->join('provinces b','a.provinsi=b.id','left')
 				->join('regencies c','a.kota_kab=c.id','left')				
 				->join('tbl_pengguna d','a.id_pengguna=d.id_pengguna','left')								
-				->where('a.id_pengguna',$id_pengguna)
-				->where('a.status',1)
+				->where('a.id_pengguna',$id_pengguna)				
 				->order_by('a.id_iklan', 'DESC');
 		
 		$query = $this->db->get();

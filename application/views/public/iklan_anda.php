@@ -30,7 +30,7 @@
             $status ="Aktif";
         }else{
             
-            $status="NonAktif";
+            $status="NonAktif <br> <small>Verifikasi admin</small>";
         }
         echo "
             <tr>
@@ -826,6 +826,9 @@ $("#form_modal").on("submit",function(){
                 if(e=="insert" || e=="update")
                 {
                     $("#info").html("<div class='alert alert-success'>Sukses! "+e+"</div>");
+                    window.setTimeout(function() {
+                        $("#responsive-modal").modal("hide");
+                    },2000);
                 }else{
                     $("#info").html("<div class='alert alert-warning'>"+e+"</div>");
                 }

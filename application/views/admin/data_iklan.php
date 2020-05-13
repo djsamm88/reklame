@@ -44,6 +44,7 @@
                                             <th>Rekomendasi</th>
                                             <th>Pemilik</th>
                                             <th>Status</th>
+                                            <th>Status Tersewa</th>
                                             <th>Action</th>                                                
                                         </tr>
                                     </thead>
@@ -70,6 +71,17 @@
                             $btn_status = "<button class='btn btn-xs btn-success' onclick='status($key->id_iklan,$key->status)'>Aktifkan</button>";
                             $key->status="NonAktif";
                         }
+
+                        if($key->status_sewa=='Tersedia')
+                        {
+                            $btn_sewa = "<button class='btn btn-xs btn-warning' onclick='sewa($key->id_iklan,\"$key->status_sewa\")'>Set Tersewa</button>";
+                            
+                        }else{
+                            $btn_sewa = "<button class='btn btn-xs btn-success' onclick='sewa($key->id_iklan,\"$key->status_sewa\")'>Set Tersedia</button>";
+                            
+                        }
+
+                         
                         echo "
                             <tr>
                                 <td>$no</td>
@@ -84,6 +96,7 @@
                                 <td>$key->rekomendasi $btn_rekomendasi</td>
                                 <td>$key->perusahaan</td>
                                 <td>$key->status $btn_status</td>
+                                <td>$key->status_sewa $btn_sewa</td>
                                 <td>
                                     <button class='btn btn-xs btn-info  btn-block' onclick='edit($key->id_iklan,2)'>View</button>
 
@@ -563,6 +576,15 @@ function status(id,val)
     }
 }
 
+function sewa(id,val)
+{
+    if(confirm("Anda Yakin?"))
+    {
+        $.post("<?php echo base_url()?>index.php/admin/iklan/sewa/",{id:id,val:val},function(){
+            eksekusi_controller('<?php echo base_url()?>index.php/admin/iklan/');
+        })
+    }   
+}
 
 /*********** maps ********/
 function mapsTambahBaru()

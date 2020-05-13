@@ -46,30 +46,46 @@
 
 										<ul class="tab-nav clearfix">
 											<li><a href="#tab-feeds"><i class="icon-user"></i> Profil</a></li>
+											<?php 
+											if($this->session->userdata('jenis')!='Mitra'){
+											?>
+											
 											<li>
 												<a href="#tab-posts" id="tab_pesanan" onclick="pesanan_anda()"><i class="icon-cart"></i> Pesanan Anda 
 													<span class="badge badge-pill badge-primary" id="badge_pesanan"><?php echo $pesanan->num_rows()?></span>
 												</a>
 											</li>
-
+											<?php } ?>
+											<?php 
+											if($this->session->userdata('jenis')=='Mitra'){
+											?>
 											<li>
 												<a href="#tab-replies" onclick="iklan_anda()"><i class="icon-store"></i> Produk Anda
 													<span class="badge badge-pill badge-warning" id="badge_produk"><?php echo $toko->num_rows()?></span>
 												</a>
-											</li>
+											</li>											
 											
 											<li>
 												<a href="#tab-order" onclick="orderan_anda()"><i class="icon-store"></i> Orderan Baru
 													<span class="badge badge-pill badge-danger" id="badge_order"><?php echo $orderan->num_rows()?></span>
 												</a>
 											</li>
+											<?php 
+											}
+											?>
 											<li><a href="#tab-connections" onclick="chating_anda()"><i class="icon-users"></i> Chatting</a></li>
 										</ul>
 
 										<div class="tab-container">
 
 											<div class="tab-content clearfix" id="tab-feeds">
-												<?php include "profil_anda.php"?>
+												<?php 												
+												if($this->session->userdata('jenis')!='Mitra'){
+													include "profil_anda.php";
+												}else if($this->session->userdata('jenis')=='Mitra'){
+													include "profil_mitra.php";
+												}
+												?>
 											</div>
 											<div class="tab-content clearfix" id="tab-posts">
 												<?php //include "pesanan_anda.php"?>
@@ -142,6 +158,40 @@ $("#form_profile_anda").on("submit",function(){
 	})
 	return false;
 })
+
+
+
+	
+$("#form_profile_mitranya").on("submit",function(){
+	
+	$.ajax({
+            url: "<?php echo base_url()?>index.php/welcome/update_profil_mitra",
+            type: "POST",
+            contentType: false,
+            processData:false,
+            data:  new FormData(this),
+            beforeSend: function(){
+                //alert("sedang uploading...");
+            },
+            success: function(e){
+                console.log(e);
+                $("#info_update_profil").html("");
+                if(e=="insert" || e=="update")
+                {
+                    $("#info_update_profil").html("<div class='alert alert-success'>Sukses! "+e+"</div>");
+                }else{
+                    $("#info_update_profil").html("<div class='alert alert-warning'>"+e+"</div>");
+                }
+                
+            },
+            error: function(er){
+                $("#info_update_profil").html("<div class='alert alert-warning'>Ada masalah! "+er+"</div>");
+            }           
+       });
+
+	return false;	
+})
+
 
 $(document).ready(function(){
 	$("#tab_pesanan").trigger("click");	

@@ -46,6 +46,10 @@
                                                 <th>alamat</th>
                                                 <th>ktp</th>
                                                 <th>npwp</th>
+                                                <th>Jenis</th>                                                
+                                                <th>Owner/Agency</th>
+                                                <th>Nama Pemilik</th>
+                                                <th>akta/SITU</th>
                                                 <th>tgl</th>
                                                 <th>UPDATE</th>
                                                 <th>password</th>
@@ -73,8 +77,12 @@
                                     <td>$key->jenis_kelamin</td>
                                     <td>$key->no_hp</td>
                                     <td>$key->alamat</td>
-                                    <td>$key->ktp</td>
-                                    <td>$key->npwp</td>
+                                    <td><a href='$key->ktp' target='blank'>$key->ktp</a></td>
+                                    <td><a href='$key->npwp' target='blank'>$key->npwp</a></td>
+                                    <td>$key->jenis</td>
+                                    <td>$key->owner_agency</td>
+                                    <td>$key->nama_jelas_perusahaan</td>
+                                    <td><a href='$key->file_akta_situ' target='blank'>$key->file_akta_situ</a></td>
                                     <td>$key->tgl</td>
                                     <td>$key->tgl_daftar</td>
                                     <td>$key->password</td>

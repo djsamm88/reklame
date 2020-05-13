@@ -13,10 +13,7 @@
 								                        <label class="control-label">nama</label>
 								                        <input type="text" class="form-control" name="nama" id="nama" value="<?php echo $user['nama']?>">
 								                    </div>
-								                    <div class="form-group">
-								                        <label class="control-label">perusahaan</label>
-								                        <input type="text" class="form-control" name="perusahaan" id="perusahaan" value="<?php echo $user['perusahaan']?>">
-								                    </div>
+								                    
 								                    <div class="form-group">
 								                        <label class="control-label">nama_bank</label>
 								                        <select type="text" class="form-control" name="nama_bank" id="nama_bank" value="<?php echo $user['nama_bank']?>">

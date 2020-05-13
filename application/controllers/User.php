@@ -96,6 +96,25 @@ class User extends CI_Controller {
 		return $query->num_rows();
 	}
 
+	public function cek_fb($id_fb) {
+		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Headers: *");
+		header('Content-Type: application/json');
+		$id_fb = $this->gas($id_fb);
+		$query = $this->db->query("SELECT * FROM tbl_pengguna WHERE id_fb='$id_fb'");					
+		if($query->num_rows()>0)
+		{
+			$sess_data=$query->result_array();
+			$this->session->set_userdata($sess_data[0]);
+			
+			$login_terakhir = date('Y-m-d H:i:s');
+			$this->db->query("UPDATE tbl_pengguna SET login_terakhir='$login_terakhir' WHERE id_fb='$id_fb'");			
+		}
+
+		echo json_encode(array("ada"=>$query->num_rows()));
+
+	}
+
 	private function login_terakhir($email) {
 		$email = $this->gas($email);
 		$login_terakhir = date('Y-m-d H:i:s');

@@ -152,7 +152,8 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 
 						<ul class="tab-nav clearfix">
 						    <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
-						    <li><a data-toggle="tab" href="#register">Daftar</a></li>
+						    <li><a data-toggle="tab" id="register_link" href="#register">Daftar Penyewa</a></li>
+						    <li><a data-toggle="tab" href="#register_pemilik">Daftar Pemilik Iklan</a></li>
 						  </ul>
 
 					  <div class="tab-container">
@@ -173,6 +174,16 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 							<div id="info_login" style="display: none;"></div>
 							<div class="col_full nobottommargin">
 								<button class="button button-3d button-black nomargin" required>Login</button>
+
+								<button class="button button-3d button-blue nomargin" type="button" onclick="login_fb()">Login FB</button>
+
+
+								<!--
+								<button class="button button-3d button-blue nomargin" type="button" onclick="logout_fb()">Logout FB</button>
+								-->
+
+								
+								
 							</div>
 					      </form>
 
@@ -182,10 +193,11 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 
 					    <div class="tab-content clearfix" id="register">
 					      	<form id="register_form" name="register-form" class="nobottommargin" action="#" method="post">
-
+					      		<input type="hidden" name="jenis" value="Pelanggan">
+					      		<input type="hidden" name="id_fb" id="id_fb_pelanggan">
 								<div class="col_half">
 									<label for="register-form-name">Nama:</label>
-									<input type="text" id="register_nama" name="nama"  class="form-control" required/>
+									<input type="text" id="register_nama_pelanggan" name="nama"  class="form-control" required/>
 								</div>
 
 								<div class="col_half col_last">
@@ -194,37 +206,6 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 								</div>
 
 								<div class="clear"></div>
-
-								<div class="col_half">
-									<label for="register-form-username">Choose a Username:</label>
-									<select id="register_jenis_kelamin" name="jenis_kelamin" class="form-control" required>
-										<option value="">--- Pilih ---</option>
-										<option value="L">L</option>
-										<option value="P">P</option>
-									</select>
-								</div>
-
-								<div class="col_half col_last">
-									<label for="register-form-phone">Phone:</label>
-									<input type="text" id="registerno_hp" name="no_hp" value="" class="form-control" required />
-								</div>
-
-								<div class="clear"></div>
-
-
-
-								<div class="col_half">
-									<label >Perusahaan:</label>
-									<input type="text" id="register_perusahaan" name="perusahaan" value="" class="form-control" required />
-								</div>
-
-								<div class="col_half col_last">
-									<label >Alamat:</label>
-									<textarea type="text" id="registerno_alamat" name="alamat" value="" class="form-control" required ></textarea>
-								</div>
-
-								<div class="clear"></div>
-
 
 
 								<div class="col_half">
@@ -241,6 +222,84 @@ $sel_kota_kab =isset($_GET['kota_kab'])?$_GET['kota_kab']:"";
 								<div id="info_daftar" style="display: none;"></div>
 								<div class="col_full nobottommargin">
 									<button class="button button-3d button-black nomargin" id="register-form-submit" name="register-form-submit" value="register" required>Daftar Sekarang</button>
+								</div>
+
+							</form>
+					    </div>
+						
+
+
+					    <div class="tab-content clearfix" id="register_pemilik">
+					      	<form id="register_form_mitra" name="register-form" class="nobottommargin" action="#" method="post">
+					      		<input type="hidden" name="jenis" value="Mitra">
+
+								<div class="col_full">
+									<label for="register-form-email">Owner / Agency:</label><br>
+									 <input type="radio" id="other" name="owner_agency" value="Owner" required>
+  									 <label for="other">Owner</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  									 <input type="radio" id="other" name="owner_agency" value="Agency">
+  									 <label for="other">Agency</label>
+								</div>
+
+								<div class="clear"></div>
+
+								<div class="col_half">
+									<label for="register-form-name">Nama:</label>
+									<input type="text" id="register_nama" name="nama"  class="form-control" required/>
+								</div>
+
+								<div class="col_half col_last">
+									<label for="register-form-email">Email Address:</label>
+									<input type="email" id="register_email_mitra" name="email" value="" class="form-control" required/>
+								</div>
+
+								<div class="clear"></div>
+
+
+								<div class="col_half">
+									<label >Nama Perusahaan:</label>
+									<input type="text" id="register_perusahaan" name="perusahaan" value="" class="form-control" required />
+								</div>
+
+								<div class="col_half col_last">
+									<label for="register-form-phone">Phone:</label>
+									<input type="text" id="registerno_hp" name="no_hp" value="" class="form-control" required />
+								</div>
+
+								<div class="clear"></div>
+
+
+
+
+								<div class="col_half">
+									<label >Nama Pemilik Perusahaan:</label>
+									<input type="text" id="nama_pemilik_perusahaan" name="perusahaan" value="" class="form-control" required />
+								</div>
+
+
+
+								<div class="col_half col_last">
+									<label >Alamat Perusahaan:</label>
+									<textarea type="text" id="alamat_perusahaan" name="alamat" value="" class="form-control" required ></textarea>
+								</div>
+
+								<div class="clear"></div>
+
+
+								<div class="col_half">
+									<label for="register-form-password">Choose Password:</label>
+									<input type="password" id="register_password_mitra" name="password" value="" class="form-control" required/>
+								</div>
+
+								<div class="col_half col_last">
+									<label for="register-form-repassword">Re-enter Password:</label>
+									<input type="password" id="register_repassword_mitra" value="" class="form-control" required/>
+								</div>
+
+								<div class="clear"></div>
+								<div id="info_daftar_mitra" style="display: none;"></div>
+								<div class="col_full nobottommargin">
+									<button class="button button-3d button-black nomargin" id="register-form-submit" name="register-form-submit" value="register" required>Join Sekarang</button>
 								</div>
 
 							</form>

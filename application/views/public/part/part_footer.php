@@ -184,10 +184,67 @@ $("#register_form").on("submit",function(){
 							 .html("<div class='alert alert-success'>Berhasil terdaftar. Mohon tunggu...</div>")
 							 .delay(500)
 							 .fadeIn();
-							 location.reload();
+							 window.location.replace(window.location.href);
 		}else
 		{
 			$("#info_daftar").hide()
+			 				 .html("<div class='alert alert-danger'>Mohon maaf.. Ada masalah: "+e+"</div>")
+			 				 .delay(500)
+			 				 .fadeIn();
+		}
+
+
+	})
+return false;
+});
+
+
+
+$("#register_form_mitra").on("submit",function(){
+	$("#info_daftar").hide();
+	if($("#register_password_mitra").val() != $("#register_repassword_mitra").val())
+	{
+		$("#info_daftar_mitra").hide()
+						 .html("<div class='alert alert-warning'>Password tidak sama</div>")
+						 .delay(500)
+						 .fadeIn();
+
+		$("#register_repassword").focus();
+		return false;
+	}
+
+	if($("#register_password_mitra").val().length < 6)
+	{
+		$("#info_daftar_mitra").hide()
+						 .html("<div class='alert alert-warning'>Password minimal 6 karakter</div>")
+						 .delay(500)
+						 .fadeIn();
+
+		$("#register_password_mitra").focus();
+		return false;
+	}
+	$.post("<?php echo base_url()?>index.php/welcome/daftar",$(this).serialize(),function(e){
+		console.log(e);
+		if(e == "email_terdaftar")
+		{
+			$("#info_daftar_mitra").hide()
+							 .html("<div class='alert alert-warning'>Email sudah terdaftar.</div>")
+							 .delay(500)
+							 .fadeIn();
+
+			$("#register_email_mitra").focus();
+			return false;
+		}else 
+		if(e == "berhasi_daftar")
+		{
+			$("#info_daftar_mitra").hide()
+							 .html("<div class='alert alert-success'>Berhasil terdaftar. Mohon tunggu...</div>")
+							 .delay(500)
+							 .fadeIn();
+			window.open("<?php echo base_url()?>index.php/welcome/toko_anda?jenis=Mitra&daftar=baru","_self");
+		}else
+		{
+			$("#info_daftar_mitra").hide()
 			 				 .html("<div class='alert alert-danger'>Mohon maaf.. Ada masalah: "+e+"</div>")
 			 				 .delay(500)
 			 				 .fadeIn();
@@ -221,7 +278,17 @@ $("#login_member").on("submit",function(){
 							.html("<div class='alert alert-success'>Berhasil Login. Mohon tunggu...</div>")
 							.delay(500)
 							.fadeIn();
-			location.reload();
+			
+			window.location.replace(window.location.href);
+		}else if(e=="berhasil_login_mitra")
+		{
+			$("#info_login").hide()
+							.html("<div class='alert alert-success'>Berhasil Login. Mohon tunggu...</div>")
+							.delay(500)
+							.fadeIn();
+			
+			window.open("<?php echo base_url()?>index.php/welcome/toko_anda","_self");
+			
 		}else{
 			$("#info_login").hide()
 							.html("<div class='alert alert-danger'>Mohon maaf. Ada masalah: "+e+"</div>")
@@ -370,3 +437,75 @@ $(document).ready(function(){
 	$("#message").focus();
 })
 </script> 
+
+
+
+
+
+<script>
+	function init() {
+        FB.api(
+          '/l214.animaux',
+          {"fields":"fan_count"},
+          function(response) {
+            alert(response.fan_count);
+          }
+        );
+    }
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '350450565689960',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v7.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+
+  function login_fb()
+  {
+  	FB.login(function(response) {
+	    if (response.authResponse) {
+	     console.log('Welcome!  Fetching your information.... ');
+	     console.log(response);
+	     FB.api('/me', function(response) {
+	       console.log(response);
+		       $.get("<?php echo base_url()?>index.php/user/cek_fb/"+response.id,function(e){
+		       	console.log(e.ada);
+		       	if(e.ada>0)
+		       	{
+		       		// disini direct login
+		       		window.location.replace(window.location.href);		
+		       	}else{
+		       		// mengalihkan ke daftar
+		       		$("#register_link").trigger("click");
+		       		$("#id_fb_pelanggan").val(response.id);
+		       		$("#register_nama_pelanggan").val(response.name);
+		       	}
+		       })
+	     });
+	    } else {
+	     console.log('User cancelled login or did not fully authorize.');
+	    }
+	});
+  }
+
+  function logout_fb()
+  {
+	  	FB.logout(function(response) {
+	   // Person is now logged out
+	});
+  }
+</script>

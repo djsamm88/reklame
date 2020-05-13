@@ -211,6 +211,7 @@ document.querySelector('#save').addEventListener("click", function(event){
 	chatForm = document.querySelector('#msg_form');
 	event.preventDefault();
 	var firebase_id = "<?php echo date('Ymdhis')?>";
+	var tgl = "<?php echo date('Y-m-d H:i:s')?>";
 	if (document.querySelector('#message').value != '') 
 	{
 		chatsRef.push({
@@ -220,8 +221,9 @@ document.querySelector('#save').addEventListener("click", function(event){
 				kpd_nama:kpd_nama,
 				isi:document.querySelector('#message').value,
 				baca:"belum",
-				firebase_id:firebase_id
-				tgl: tgl
+				firebase_id:firebase_id,
+				tgl:tgl
+				
 				
 			});
 			
@@ -233,7 +235,7 @@ document.querySelector('#save').addEventListener("click", function(event){
 							kpd_id:kpd_id,
 							kpd_nama:kpd_nama,
 							baca:"belum",
-							firebase_id:firebase_id
+							firebase_id:firebase_id,
 							isi:document.querySelector('#message').value
 						}
 		$.post("<?php echo base_url()?>index.php/welcome/simpan_chat",serialize,function(){

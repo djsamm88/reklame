@@ -113,7 +113,15 @@ class Welcome extends CI_Controller {
 			$query = $this->db->get('tbl_pengguna');
 			if($query->num_rows()>0)
 			{
-				echo "berhasil_login";
+				//var_dump($query->result()[0]);
+				//die();
+				if($query->result()[0]->jenis=='Mitra')
+				{
+					echo "berhasil_login_mitra";
+				}else{
+					echo "berhasil_login";
+				}
+				
 				$this->login_terakhir($serialize['email']);
 				$sess_data=$query->result_array();
 				$this->session->set_userdata($sess_data[0]);
@@ -255,9 +263,33 @@ class Welcome extends CI_Controller {
 
 		$serialize = $this->input->post();
 		$this->m_pengguna->update($serialize,$id);
-		die('update');
-	
+		die('update');	
 		
+	}
+
+	public function update_profil_mitra()
+	{
+		$serialize = $this->input->post();
+
+		if(upload_file('ktp')!=""){
+			$serialize['ktp'] = upload_file('ktp');	
+		}
+
+		if(upload_file('npwp')!=""){
+			$serialize['npwp'] = upload_file('npwp');	
+		}
+
+		if(upload_file('file_akta_situ')!=""){
+			$serialize['file_akta_situ'] = upload_file('file_akta_situ');	
+		}
+
+		$id = $this->input->post('id_pengguna');		
+
+		$this->m_pengguna->update($serialize,$id);
+		die('update');
+		
+
+
 	}
 
 
