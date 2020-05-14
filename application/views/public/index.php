@@ -13,6 +13,11 @@
 		?>
 
 
+		<?php 
+			include ("part/slider_kecil.php");
+		?>
+
+
 		<!-- Content
 		============================================= -->
 		<section id="content">
